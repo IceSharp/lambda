@@ -1,0 +1,336 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Python Requests Retry Failed Requests | 甘露园技术栈</title><meta name="author" content="乘月又乘风"><meta name="copyright" content="乘月又乘风"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="Although the Requests library makes it easier to make HTTP requests in Python, getting failed requests is frequent due to a network connection issue or other reasons. Therefore, this tutorial introduc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python Requests Retry Failed Requests">
+<meta property="og:url" content="https://lambda.bz/posts/9f3a32c3.html">
+<meta property="og:site_name" content="甘露园技术栈">
+<meta property="og:description" content="Although the Requests library makes it easier to make HTTP requests in Python, getting failed requests is frequent due to a network connection issue or other reasons. Therefore, this tutorial introduc">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/27/markus-spiske-AaEQmoufHLk-unsplash.webp">
+<meta property="article:published_time" content="2024-04-27T07:25:17.000Z">
+<meta property="article:modified_time" content="2024-05-06T02:58:46.300Z">
+<meta property="article:author" content="乘月又乘风">
+<meta property="article:tag" content="Python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/27/markus-spiske-AaEQmoufHLk-unsplash.webp"><link rel="shortcut icon" href="/image/favicon.ico"><link rel="canonical" href="https://lambda.bz/posts/9f3a32c3.html"><link rel="preconnect" href="https://cdn.bootcss.com"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=4.13.0"><link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/6.5.1/css/all.min.css"><link rel="stylesheet" href="https://cdn.bootcss.com/fancyapps-ui/5.0.33/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":true,"top_n_per_article":1,"unescape":false,"languages":{"hits_empty":"找不到您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  noticeOutdate: {"limitDay":500,"position":"top","messagePrev":"It has been","messageNext":"days since the last update, the content of the article may be outdated."},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: 乘月又乘风","link":"链接: ","source":"来源: 甘露园技术栈","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.bootcss.com/egjs-infinitegrid/4.11.1/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Python Requests Retry Failed Requests',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-05-06 10:58:46'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="manifest" href="/site.webmanifest"><link rel="stylesheet" media="defer" onload="this.media='all'"><link rel="stylesheet" href="/css/universe.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/modified.css"><link rel="stylesheet" href="/css/background.css"><link href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css" rel="stylesheet"><script src="https://cdn.bootcss.com/pace/1.0.2/pace.min.js" async></script><script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.4.3/echarts.min.js"></script><meta name="generator" content="Hexo 7.1.1"><link rel="alternate" href="/atom.xml" title="甘露园技术栈" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="甘露园技术栈" type="application/rss+xml">
+</head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>(()=>{
+  const $loadingBox = document.getElementById('loading-box')
+  const $body = document.body
+  const preloader = {
+    endLoading: () => {
+      $body.style.overflow = ''
+      $loadingBox.classList.add('loaded')
+    },
+    initLoading: () => {
+      $body.style.overflow = 'hidden'
+      $loadingBox.classList.remove('loaded')
+    }
+  }
+
+  preloader.initLoading()
+  window.addEventListener('load',() => { preloader.endLoading() })
+
+  if (false) {
+    document.addEventListener('pjax:send', () => { preloader.initLoading() })
+    document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+  }
+})()</script><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/me.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fa-brands fa-fantasy-flight-games"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><span> 关于</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li><li><a class="site-page child" href="/charts/"><i class="fa-fw fa-solid fa-chart-simple"></i><span> 统计</span></a></li></ul></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://tron.oss-cn-beijing.aliyuncs.com/2024/04/27/markus-spiske-6pflEeSzGUo-unsplash.webp')"><nav id="nav"><span id="blog-info"><a href="/" title="甘露园技术栈"><img class="site-icon" src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/loogo-ngb.png"/></a></span><div id="menus"><div id="search-button"><a class="site-page social-icon search" href="javascript:void(0);"><i class="fas fa-search fa-fw"></i><span> 搜索</span></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 清单</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/songs/"><i class="fa-fw fas fa-music"></i><span> 音乐</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 电影</span></a></li><li><a class="site-page child" href="/games/"><i class="fa-fw fa-brands fa-fantasy-flight-games"></i><span> 游戏</span></a></li><li><a class="site-page child" href="/books/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fas fa-images"></i><span> 照片</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><span> 关于</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></li><li><a class="site-page child" href="/charts/"><i class="fa-fw fa-solid fa-chart-simple"></i><span> 统计</span></a></li></ul></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Python Requests Retry Failed Requests</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-04-27T07:25:17.000Z" title="发表于 2024-04-27 15:25:17">2024-04-27</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-05-06T02:58:46.300Z" title="更新于 2024-05-06 10:58:46">2024-05-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Python/">Python</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.8k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>10分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Python Requests Retry Failed Requests"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>Although the Requests library makes it easier to make HTTP requests in Python, getting failed requests is frequent due to a network connection issue or other reasons. Therefore, this tutorial introduces the different causes and teaches you how to create a Python Requests retry script to attempt your requests again.</p>
+<p><img src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/27/web-scraping-attack.jpg.webp" alt="Python Requests"></p>
+<p> The two main methods we’ll cover are:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.zenrows.com/blog/python-requests-retry#use-existing-retry-wrapper">Use an existing retry wrapper (recommended)</a>.</li>
+<li><a target="_blank" rel="noopener" href="https://www.zenrows.com/blog/python-requests-retry#code-your-retry-wrapper">Code your retry wrapper (advanced)</a>.</li>
+</ul>
+<h2 id="What-to-Know-to-Build-the-Python-Requests’-Retry-Logic"><a href="#What-to-Know-to-Build-the-Python-Requests’-Retry-Logic" class="headerlink" title="What to Know to Build the Python Requests’ Retry Logic"></a>What to Know to Build the Python Requests’ Retry Logic</h2><p>Should retries be attempted in all cases or only in specific scenarios? When is the appropriate time to retry, and how many attempts should be made?</p>
+<p>In this section, we’ll answer those questions and provide code examples to help you build a <a target="_blank" rel="noopener" href="https://www.zenrows.com/blog/web-crawler-python">web crawler Python</a> Requests retry logic. </p>
+<h3 id="Types-of-Failed-Requests"><a href="#Types-of-Failed-Requests" class="headerlink" title="Types of Failed Requests"></a>Types of Failed Requests</h3><p>Understanding the reasons behind a failed request will allow you to develop strategies to deal with each case. Essentially, we can talk of <strong>requests that timed out (there’s no response from the server) and requests that returned an error</strong>.</p>
+<p>Let’s see each one.</p>
+<h4 id="Timed-out"><a href="#Timed-out" class="headerlink" title="Timed out"></a>Timed out</h4><p>A request may time out, resulting in no response from the server. That can happen for several reasons, such as overloaded servers, problems with how the server responds, or slow network connections.</p>
+<p>When faced with timeout scenarios, consider checking your internet connection, as a stable connection may suggest the problem is server related.</p>
+<p>You can <a target="_blank" rel="noopener" href="https://requests.readthedocs.io/en/latest/user/quickstart/#errors-and-exceptions">catch exceptions</a> related to timeouts, such as <code>requests.Timeout</code>, and implement a Python retry mechanism conditionally or with strategies like exponential backoff. We’ll look at these later on.</p>
+<h4 id="Returned-an-Error"><a href="#Returned-an-Error" class="headerlink" title="Returned an Error"></a>Returned an Error</h4><p>When a request is unsuccessful, it’ll most often return an error response, which typically comes with a specific status code and an error message. The first tells what went wrong, and the second includes additional information that can provide insights into the actual problem. For instance:</p>
+<p>Your first approach to addressing this scenario is to review both the status code and error message while ensuring that the request is properly formed. If you suspect that the error results from a temporary problem or server issues, you may retry the request with caution.</p>
+<p>Frustrated that your web scrapers are blocked once and again?</p>
+<h3 id="Status-Codes-for-a-Python-Requests-Retry-Loop"><a href="#Status-Codes-for-a-Python-Requests-Retry-Loop" class="headerlink" title="Status Codes for a Python Requests Retry Loop"></a>Status Codes for a Python Requests Retry Loop</h3><p>The different errors in client-server communications are in the 4xx and 5xx code ranges. They include:</p>
+<ul>
+<li>400 Bad Request.</li>
+<li>401 Unauthorized.</li>
+<li>403 Forbidden.</li>
+<li>404 Not Found.</li>
+<li>405 Method Not Allowed.</li>
+<li>408 Request Timeout.</li>
+<li>429 Too Many Requests.</li>
+<li>500 Internal Server Error.</li>
+<li>501 Not Implemented.</li>
+<li>502 Bad Gateway.</li>
+<li>503 Service Unavailable.</li>
+<li>504 Gateway Timeout.</li>
+<li>505 HTTP Version Not Supported.</li>
+</ul>
+<p><strong>The most common ones you’ll see while web scraping are:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>403 Forbidden</td>
+<td>The server understands the request but won’t fulfill it because it doesn’t have the right permissions or access.</td>
+</tr>
+<tr>
+<td>429 Too Many Requests</td>
+<td>The server has received too many requests from the same IP within a given time frame, so it’s rate-limiting in web scraping.</td>
+</tr>
+<tr>
+<td>500 Internal Server Error</td>
+<td>A generic server error occurred, indicating that something went wrong on the server while processing the request.</td>
+</tr>
+<tr>
+<td>502 Bad Gateway</td>
+<td>The server acting as a gateway or proxy received an invalid response from an upstream server.</td>
+</tr>
+<tr>
+<td>503 Service Unavailable</td>
+<td>The server is too busy or undergoing maintenance and can’t handle the request right now.</td>
+</tr>
+<tr>
+<td>504 Gateway Timeout</td>
+<td>An upstream server didn’t respond quickly enough to the gateway or proxy.</td>
+</tr>
+</tbody></table>
+<p>You can check out the MDN docs for more information on <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response status codes</a>.</p>
+<h3 id="Number-of-Retries"><a href="#Number-of-Retries" class="headerlink" title="Number of Retries"></a>Number of Retries</h3><p>Setting the number of retries for a failed request depends on several considerations, such as the type of request error and the response time. Errors like <code>429 Too Many Requests</code> are temporary and should have more retries than those that aren’t. </p>
+<p>While there’s no <em>best</em> maximum number of retries, it’s recommended to set a reasonable limit to avoid indefinite retries and potential performance issues. You can start with small values like three or five.</p>
+<h3 id="Delay"><a href="#Delay" class="headerlink" title="Delay"></a>Delay</h3><p>Delays between requests should be set to prevent websites and APIs from becoming overloaded and to maintain compliance with rate limits.</p>
+<h4 id="Fixed-or-Random-Delay"><a href="#Fixed-or-Random-Delay" class="headerlink" title="Fixed or Random Delay"></a>Fixed or Random Delay</h4><p>A fixed delay between requests can be introduced using the <code>time.sleep()</code> function from the time module. And to add randomness to the delay, you can employ a combination of the <code>time.sleep()</code> function and the <code>random</code> module.</p>
+<p>Just like the number of retries, there isn’t a rule set in stone for how long the delay should be, but you can experiment with different reasonable delay values around 300ms to find an optimal balance. </p>
+<h4 id="Backoff-Strategy-for-the-Delays"><a href="#Backoff-Strategy-for-the-Delays" class="headerlink" title="Backoff Strategy for the Delays"></a>Backoff Strategy for the Delays</h4><p>The backoff strategy is a commonly used technique for setting increasing delays between retries instead of fixed or random ones. Each request increases the delay by an exponential backoff factor, usually greater than one. This approach generally helps to handle temporary issues while avoiding overloading servers.</p>
+<p>The backoff algorithm is this:</p>
+<p>For example, here are the delay sequences for backoff factors 2, 3, and 10:</p>
+<h2 id="Best-Methods-to-Retry-Python-Requests"><a href="#Best-Methods-to-Retry-Python-Requests" class="headerlink" title="Best Methods to Retry Python Requests"></a>Best Methods to Retry Python Requests</h2><p>In this section, we’ll look at the best methods to retry Python Requests. They include:</p>
+<ul>
+<li>Use an existing retry wrapper: Python Sessions with HTTPAdapter.</li>
+<li>Code your retry wrapper.</li>
+</ul>
+<p>We recommend the first one, but the second one might be suitable in some scenarios.</p>
+<h3 id="Method-1-Use-an-Existing-Retry-Wrapper-Python-Sessions-with-HTTPAdapter"><a href="#Method-1-Use-an-Existing-Retry-Wrapper-Python-Sessions-with-HTTPAdapter" class="headerlink" title="Method 1: Use an Existing Retry Wrapper: Python Sessions with HTTPAdapter"></a>Method 1: Use an Existing Retry Wrapper: Python Sessions with HTTPAdapter</h3><p>Python Requests uses the <a target="_blank" rel="noopener" href="https://urllib3.readthedocs.io/en/stable/index.html">urllib3 HTTP client</a> under the hood. With the Python Requests’ <a target="_blank" rel="noopener" href="https://docs.python-requests.org/en/v1.2.3/api/#requests.adapters.HTTPAdapter">HTTP adapter class</a> and the <a target="_blank" rel="noopener" href="https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Retry">Retry utility class</a> from the <code>urllib3</code> package, you can set up retries in Python. <strong>The HTTPAdapter class lets you specify a retry strategy</strong> and also change the behavior of requests.</p>
+<h4 id="Retry-on-Failure"><a href="#Retry-on-Failure" class="headerlink" title="Retry on Failure"></a>Retry on Failure</h4><p>To implement the Python Requests retry logic in case of failure, start by defining options.</p>
+<p>We set the maximum number of requests to <code>4</code> and specified that the request should only be reattempted if the error has a status code of either <code>429</code>, <code>500</code>, <code>502</code>, <code>503</code>, or <code>504</code>.</p>
+<p>The retry strategy is passed to the HTTPAdapter when creating a new <code>adapter</code> object. The adapter is then mounted to a session object, which is used to make all requests.</p>
+<h4 id="Sessions-and-HTTPAdapter-with-a-Backoff-Strategy"><a href="#Sessions-and-HTTPAdapter-with-a-Backoff-Strategy" class="headerlink" title="Sessions and HTTPAdapter with a Backoff Strategy"></a>Sessions and HTTPAdapter with a Backoff Strategy</h4><p>To use the backoff strategy to set increasing delays between retries, add the <code>backoff_factor</code> parameter in the retry wrapper:</p>
+<h3 id="Method-2-Code-Your-Retry-Wrapper"><a href="#Method-2-Code-Your-Retry-Wrapper" class="headerlink" title="Method 2: Code Your Retry Wrapper"></a>Method 2: Code Your Retry Wrapper</h3><p>Unlike in the previous option, we’ll create a custom wrapper for the retry logic now. That way, you’ll have the flexibility of implementing a custom error handler, logging, and more.</p>
+<h4 id="Python-Requests-Retry-on-Failure"><a href="#Python-Requests-Retry-on-Failure" class="headerlink" title="Python Requests: Retry on Failure"></a>Python Requests: Retry on Failure</h4><p>To keep it easy, let’s create the Python function <code>retry_request</code> to simulate the retry logic implementation of method 1.</p>
+<p>Inside, it takes in the target URL as its first argument, then <code>total</code> for the number of retries, and <code>status_forcelist</code> to specify the type of errors for which to retry the request.</p>
+<h4 id="Retry-Python-Requests-with-a-Backoff-Strategy"><a href="#Retry-Python-Requests-with-a-Backoff-Strategy" class="headerlink" title="Retry Python Requests with a Backoff Strategy"></a>Retry Python Requests with a Backoff Strategy</h4><p>To retry Python Requests with a backoff strategy, take the previous code as a base. Then, create a separate function named <code>backoff_delay</code> to calculate the delay and use the <code>time.sleep()</code> function to make it happen like this:</p>
+<p>Using the <code>backoff_delay</code> function, you’ll have the following:</p>
+<h2 id="Avoid-Getting-Blocked-by-Error-403-with-Python-Requests"><a href="#Avoid-Getting-Blocked-by-Error-403-with-Python-Requests" class="headerlink" title="Avoid Getting Blocked by Error 403 with Python Requests"></a>Avoid Getting Blocked by Error 403 with Python Requests</h2><p>Getting blocked because you’re identified as a bot is the biggest problem when crawling. Some websites may block your IP address or take other measures to prevent you from accessing the site if you are detected as a bot. </p>
+<p>To prove this, let’s attempt to scrape a protected <a target="_blank" rel="noopener" href="https://www.g2.com/products/notion/reviews">page on G2.com</a>:</p>
+<p>Run the code, and you’ll get a response like the one below, indicating that you were blocked with a 403 error:</p>
+<h2 id="Best-Practice-Retry-Python-Requests-with-a-Decorator"><a href="#Best-Practice-Retry-Python-Requests-with-a-Decorator" class="headerlink" title="Best Practice: Retry Python Requests with a Decorator"></a>Best Practice: Retry Python Requests with a Decorator</h2><p>Using a decorator to implement retries is a cleaner approach, as the Python Requests retry logic contained in the decorator can be easily applied to multiple methods or functions.</p>
+<p>Instead of implementing the decorator yourself, you can use <a target="_blank" rel="noopener" href="https://github.com/jd/tenacity">Tenacity</a>, a community-maintained package that simplifies the process of adding retry behavior to requests.</p>
+<p>Start by installing Tenacity:</p>
+<p><em>Italic</em> The <code>retry</code> decorator from Tenacity takes in arguments like <code>stop</code> for the maximum number of retries and <code>wait</code> for details, <a target="_blank" rel="noopener" href="https://tenacity.readthedocs.io/en/latest/">among others</a>.</p>
+<p>Here you have it implemented in a scraper:</p>
+<h2 id="POST-Retry-with-Python-Requests"><a href="#POST-Retry-with-Python-Requests" class="headerlink" title="POST Retry with Python Requests"></a>POST Retry with Python Requests</h2><p>In addition to the <code>GET</code> method request we’ve been using, <a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods">other methods</a> can be retried, such as <code>POST</code> for creating new resources on the server and <code>PUT</code> for updating existing resources. For example, to submit a form.</p>
+<p>You can use Tenacity to make a <code>POST</code> request by replacing <code>requests.get</code> with <code>requests.post</code>. Check out line 10:</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Handling failed requests is critical to building a robust and reliable web scraper. In this tutorial, we looked into the importance of retrying failed requests and what to know to code them. Now you know:</p>
+<ul>
+<li>The most important Python Requests retry logic considerations.</li>
+<li>The two best options for retries.</li>
+<li>How to retry requests with different HTTP methods.</li>
+</ul>
+<p>One of the biggest challenges is getting access denied because you’re detected as a bot. To overcome that barrier, a popular web scraping API like ZenRows will help prevent you from getting blocked and save you tons of time and effort against anti-bot measures. </p>
+<h2 id="Frequent-Questions"><a href="#Frequent-Questions" class="headerlink" title="Frequent Questions"></a>Frequent Questions</h2><h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>How Do You Retry a Request in Python?</p>
+<p>You can retry a request in Python by either using the existing wrapper from Requests or creating a custom wrapper with loops and exception handling in order to implement a retry mechanism.</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><p>How Do You Force Keep-Alive in Python Requests?</p>
+<p>You can force Keep-Alive in Python Requests by using the <code>Session</code> object and setting the Connection header to <code>keep-alive</code>. That lets the underlying TCP connection be used for other requests to the same server, which improves performance when making multiple requests to the same endpoint.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Create a session object </span></span><br><span class="line">session = requests.Session() </span><br><span class="line"><span class="comment"># Set keep-alive for all requests made through this session </span></span><br><span class="line">session.headers.update(&#123;<span class="string">&#x27;Connection&#x27;</span>: <span class="string">&#x27;keep-alive&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a></h3><p>How Do You Handle Timeouts in Python Requests?</p>
+<p>You can handle timeouts using the <code>timeout</code> parameter, which specifies the maximum amount of time (in seconds) that the request should wait for a response before raising a timeout exception.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pip install requests </span></span><br><span class="line"><span class="keyword">import</span> requests </span><br><span class="line">response = requests.get(<span class="string">&#x27;https://example.com&#x27;</span>, timeout=<span class="number">15</span>) </span><br><span class="line"><span class="built_in">print</span>(response.text)</span><br></pre></td></tr></table></figure>
+
+<h3 id="-3"><a href="#-3" class="headerlink" title=""></a></h3><p>What is Error Code 404 in Python Requests?</p>
+<p>Error code 404 is the same as the HTTP status <code>Not Found</code>, which means that the server couldn’t find the requested resource.</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://lambda.bz">乘月又乘风</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://lambda.bz/posts/9f3a32c3.html">https://lambda.bz/posts/9f3a32c3.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://lambda.bz" target="_blank">甘露园技术栈</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/posts/85f45869.html" title="在R语言中使用ggplot2绘图"><img class="cover" src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/gabriel-heinzer.webp" onerror="onerror=null;src='https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/404.webp'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">在R语言中使用ggplot2绘图</div></div></a></div><div class="next-post pull-right"><a href="/posts/6bfb980.html" title="typer 命令行程序框架"><img class="cover" src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/gabriel-heinzer.webp" onerror="onerror=null;src='https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/404.webp'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">typer 命令行程序框架</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/posts/f78b8245.html" title="Plotly 绘图布局"><img class="cover" src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/codioful-formerly-gradienta-QWutu2BRpOs-unsplash.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-03-06</div><div class="title">Plotly 绘图布局</div></div></a></div><div><a href="/posts/f0b350cf.html" title="Python 计算技巧"><img class="cover" src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/codioful-formerly-gradienta-QWutu2BRpOs-unsplash.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-22</div><div class="title">Python 计算技巧</div></div></a></div><div><a href="/posts/6bfb980.html" title="typer 命令行程序框架"><img class="cover" src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/gabriel-heinzer.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-26</div><div class="title">typer 命令行程序框架</div></div></a></div><div><a href="/posts/65b4eb9.html" title="Python命令行动态进度条库：alive-progress"><img class="cover" src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/codioful-formerly-gradienta-QWutu2BRpOs-unsplash.webp" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-04-25</div><div class="title">Python命令行动态进度条库：alive-progress</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="waline-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/me.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">乘月又乘风</div><div class="author-info__description">Superman is here!</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">11</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/icesharp"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/icesharp" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="/atom.xml" target="_blank" title="RSS"><i class="fa-solid fa-square-rss" style="color: #FFA500;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#What-to-Know-to-Build-the-Python-Requests%E2%80%99-Retry-Logic"><span class="toc-number">1.</span> <span class="toc-text">What to Know to Build the Python Requests’ Retry Logic</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Types-of-Failed-Requests"><span class="toc-number">1.1.</span> <span class="toc-text">Types of Failed Requests</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Timed-out"><span class="toc-number">1.1.1.</span> <span class="toc-text">Timed out</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Returned-an-Error"><span class="toc-number">1.1.2.</span> <span class="toc-text">Returned an Error</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Status-Codes-for-a-Python-Requests-Retry-Loop"><span class="toc-number">1.2.</span> <span class="toc-text">Status Codes for a Python Requests Retry Loop</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Number-of-Retries"><span class="toc-number">1.3.</span> <span class="toc-text">Number of Retries</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Delay"><span class="toc-number">1.4.</span> <span class="toc-text">Delay</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Fixed-or-Random-Delay"><span class="toc-number">1.4.1.</span> <span class="toc-text">Fixed or Random Delay</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Backoff-Strategy-for-the-Delays"><span class="toc-number">1.4.2.</span> <span class="toc-text">Backoff Strategy for the Delays</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-Methods-to-Retry-Python-Requests"><span class="toc-number">2.</span> <span class="toc-text">Best Methods to Retry Python Requests</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Method-1-Use-an-Existing-Retry-Wrapper-Python-Sessions-with-HTTPAdapter"><span class="toc-number">2.1.</span> <span class="toc-text">Method 1: Use an Existing Retry Wrapper: Python Sessions with HTTPAdapter</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Retry-on-Failure"><span class="toc-number">2.1.1.</span> <span class="toc-text">Retry on Failure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sessions-and-HTTPAdapter-with-a-Backoff-Strategy"><span class="toc-number">2.1.2.</span> <span class="toc-text">Sessions and HTTPAdapter with a Backoff Strategy</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Method-2-Code-Your-Retry-Wrapper"><span class="toc-number">2.2.</span> <span class="toc-text">Method 2: Code Your Retry Wrapper</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Python-Requests-Retry-on-Failure"><span class="toc-number">2.2.1.</span> <span class="toc-text">Python Requests: Retry on Failure</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Retry-Python-Requests-with-a-Backoff-Strategy"><span class="toc-number">2.2.2.</span> <span class="toc-text">Retry Python Requests with a Backoff Strategy</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Avoid-Getting-Blocked-by-Error-403-with-Python-Requests"><span class="toc-number">3.</span> <span class="toc-text">Avoid Getting Blocked by Error 403 with Python Requests</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Best-Practice-Retry-Python-Requests-with-a-Decorator"><span class="toc-number">4.</span> <span class="toc-text">Best Practice: Retry Python Requests with a Decorator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST-Retry-with-Python-Requests"><span class="toc-number">5.</span> <span class="toc-text">POST Retry with Python Requests</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Conclusion"><span class="toc-number">6.</span> <span class="toc-text">Conclusion</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Frequent-Questions"><span class="toc-number">7.</span> <span class="toc-text">Frequent Questions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">7.1.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-1"><span class="toc-number">7.2.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-2"><span class="toc-number">7.3.</span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#-3"><span class="toc-number">7.4.</span> <span class="toc-text"></span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/6891fdec.html" title="五一，一到假期就过得特别快。"><img src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/05/06/freestocks.webp" onerror="this.onerror=null;this.src='https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/404.webp'" alt="五一，一到假期就过得特别快。"/></a><div class="content"><a class="title" href="/posts/6891fdec.html" title="五一，一到假期就过得特别快。">五一，一到假期就过得特别快。</a><time datetime="2024-05-06T03:07:18.000Z" title="发表于 2024-05-06 11:07:18">2024-05-06</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/25f40947.html" title="JavaScript学习资料备忘"><img src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/29/gabriel-heinzer-js.webp" onerror="this.onerror=null;this.src='https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/404.webp'" alt="JavaScript学习资料备忘"/></a><div class="content"><a class="title" href="/posts/25f40947.html" title="JavaScript学习资料备忘">JavaScript学习资料备忘</a><time datetime="2024-04-29T15:51:39.000Z" title="发表于 2024-04-29 23:51:39">2024-04-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/85f45869.html" title="在R语言中使用ggplot2绘图"><img src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/gabriel-heinzer.webp" onerror="this.onerror=null;this.src='https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/404.webp'" alt="在R语言中使用ggplot2绘图"/></a><div class="content"><a class="title" href="/posts/85f45869.html" title="在R语言中使用ggplot2绘图">在R语言中使用ggplot2绘图</a><time datetime="2024-04-27T18:25:57.000Z" title="发表于 2024-04-28 02:25:57">2024-04-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/9f3a32c3.html" title="Python Requests Retry Failed Requests"><img src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/27/markus-spiske-AaEQmoufHLk-unsplash.webp" onerror="this.onerror=null;this.src='https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/404.webp'" alt="Python Requests Retry Failed Requests"/></a><div class="content"><a class="title" href="/posts/9f3a32c3.html" title="Python Requests Retry Failed Requests">Python Requests Retry Failed Requests</a><time datetime="2024-04-27T07:25:17.000Z" title="发表于 2024-04-27 15:25:17">2024-04-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/6bfb980.html" title="typer 命令行程序框架"><img src= "/image/800x600-loading-81.gif" data-lazy-src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/26/gabriel-heinzer.webp" onerror="this.onerror=null;this.src='https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/404.webp'" alt="typer 命令行程序框架"/></a><div class="content"><a class="title" href="/posts/6bfb980.html" title="typer 命令行程序框架">typer 命令行程序框架</a><time datetime="2024-04-26T08:25:57.000Z" title="发表于 2024-04-26 16:25:57">2024-04-26</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2024 By 乘月又乘风</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=4.13.0"></script><script src="/js/main.js?v=4.13.0"></script><script src="https://cdn.bootcss.com/fancyapps-ui/5.0.33/fancybox/fancybox.umd.min.js"></script><script src="https://cdn.bootcss.com/instant.page/5.2.0/instantpage.min.js" type="module"></script><script src="https://cdn.bootcss.com/vanilla-lazyload/17.8.8/lazyload.iife.min.js"></script><div class="js-pjax"><script>(() => {
+  let initFn = window.walineFn || null
+
+  const initWaline = (Fn) => {
+    const waline = Fn(Object.assign({
+      el: '#waline-wrap',
+      serverURL: 'https://c.lambda.bz',
+      pageview: false,
+      dark: 'html[data-theme="dark"]',
+      path: window.location.pathname,
+      comment: false,
+    }, null))
+
+    const destroyWaline = () => {
+      waline.destroy()
+    }
+
+    btf.addGlobalFn('pjax', destroyWaline, 'destroyWaline')
+  }
+
+  const loadWaline = async () => {
+    if (initFn) initWaline(initFn)
+    else {
+      await getCSS('https://cdn.bootcss.com/waline/3.1.2/waline.min.css')
+      const { init } = await import('https://cdn.bootcss.com/waline/3.1.2/waline.min.js')
+      initFn = init || Waline.init
+      initWaline(initFn)
+      window.walineFn = initFn
+    }
+  }
+
+  if ('Waline' === 'Waline' || !false) {
+    if (false) btf.loadComment(document.getElementById('waline-wrap'),loadWaline)
+    else setTimeout(loadWaline, 0)
+  } else {
+    window.loadOtherComment = loadWaline
+  }
+})()</script></div><canvas id="universe"></canvas><script defer src="/js/universe.js"></script><script>window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };</script><script defer src="/_vercel/speed-insights/script.js"></script><script id="canvas_nest" defer="defer" color="255,0,255" opacity="0.6" zIndex="-1" count="66" mobile="false" src="https://cdn.bootcss.com/butterfly-extsrc/1.1.3/canvas-nest.min.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><span id="loading-status"></span><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="is-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据库加载中</span></div><div class="search-wrap"><div id="local-search-input"><div class="local-search-box"><input class="local-search-box--input" placeholder="搜索文章" type="text"/></div></div><hr/><div id="local-search-results"></div><div id="local-search-stats-wrap"></div></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=4.13.0"></script></div></div></body></html>

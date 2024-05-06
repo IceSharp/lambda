@@ -1,0 +1,743 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Front-matter 备忘</title>
+    <url>/posts/61370ac5.html</url>
+    <content><![CDATA[<p>Hexo主题butterfly可用的Front-matter列表。</p>
+<p><strong>What is front matter?</strong></p>
+<blockquote>
+<blockquote>
+<p>Front matter is the first section of a book and is generally the shortest; it is also sometimes called the prelims, or preliminary matter. It can be as simple as a single title page, or it can include multiple title pages, foreword, a preface, and much more. What is included in front matter really depends on the type of publication, so let’s go over some of the possibilities.</p>
+</blockquote>
+</blockquote>
+<p>文章（Post）的 Front-matter 清单列表</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">title:</span><br><span class="line">date:</span><br><span class="line">updated:</span><br><span class="line">tags:</span><br><span class="line">categories:</span><br><span class="line">keywords:</span><br><span class="line">description:</span><br><span class="line">top<span class="emphasis">_img:</span></span><br><span class="line"><span class="emphasis">comments:</span></span><br><span class="line"><span class="emphasis">cover:</span></span><br><span class="line"><span class="emphasis">toc:</span></span><br><span class="line"><span class="emphasis">toc_</span>number:</span><br><span class="line">toc<span class="emphasis">_style_</span>simple:</span><br><span class="line">copyright:</span><br><span class="line">copyright<span class="emphasis">_author:</span></span><br><span class="line"><span class="emphasis">copyright_</span>author<span class="emphasis">_href:</span></span><br><span class="line"><span class="emphasis">copyright_</span>url:</span><br><span class="line">copyright<span class="emphasis">_info:</span></span><br><span class="line"><span class="emphasis">mathjax:</span></span><br><span class="line"><span class="emphasis">katex:</span></span><br><span class="line"><span class="emphasis">aplayer:</span></span><br><span class="line"><span class="emphasis">highlight_</span>shrink:</span><br><span class="line">aside:</span><br></pre></td></tr></table></figure>
+
+<p>单独页面（Page）的 Front-matter 清单列表</p>
+<figure class="highlight markdown"><table><tr><td class="code"><pre><span class="line">title: [必须]页面标题</span><br><span class="line">date:</span><br><span class="line">updated:</span><br><span class="line">type:</span><br><span class="line">comments:</span><br><span class="line">description:</span><br><span class="line">keywords:</span><br><span class="line">top<span class="emphasis">_img:</span></span><br><span class="line"><span class="emphasis">mathjax:</span></span><br><span class="line"><span class="emphasis">katex:</span></span><br><span class="line"><span class="emphasis">aside:</span></span><br><span class="line"><span class="emphasis">aplayer:</span></span><br><span class="line"><span class="emphasis">highlight_</span>shrink:</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>butterfly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>五一，一到假期就过得特别快。</title>
+    <url>/posts/6891fdec.html</url>
+    <content><![CDATA[<p>玩一天，歇两天，不知不觉中就上班了。<br><img src="https://tron.oss-cn-beijing.aliyuncs.com/2024/05/06/mosi-knife.webp" alt="Blue Sky"></p>
+]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>Hoilday</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python Requests Retry Failed Requests</title>
+    <url>/posts/9f3a32c3.html</url>
+    <content><![CDATA[<p>Although the Requests library makes it easier to make HTTP requests in Python, getting failed requests is frequent due to a network connection issue or other reasons. Therefore, this tutorial introduces the different causes and teaches you how to create a Python Requests retry script to attempt your requests again.</p>
+<p><img src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/27/web-scraping-attack.jpg.webp" alt="Python Requests"></p>
+<p> The two main methods we’ll cover are:</p>
+<ul>
+<li><a href="https://www.zenrows.com/blog/python-requests-retry#use-existing-retry-wrapper">Use an existing retry wrapper (recommended)</a>.</li>
+<li><a href="https://www.zenrows.com/blog/python-requests-retry#code-your-retry-wrapper">Code your retry wrapper (advanced)</a>.</li>
+</ul>
+<h2 id="What-to-Know-to-Build-the-Python-Requests’-Retry-Logic"><a href="#What-to-Know-to-Build-the-Python-Requests’-Retry-Logic" class="headerlink" title="What to Know to Build the Python Requests’ Retry Logic"></a>What to Know to Build the Python Requests’ Retry Logic</h2><p>Should retries be attempted in all cases or only in specific scenarios? When is the appropriate time to retry, and how many attempts should be made?</p>
+<p>In this section, we’ll answer those questions and provide code examples to help you build a <a href="https://www.zenrows.com/blog/web-crawler-python">web crawler Python</a> Requests retry logic. </p>
+<h3 id="Types-of-Failed-Requests"><a href="#Types-of-Failed-Requests" class="headerlink" title="Types of Failed Requests"></a>Types of Failed Requests</h3><p>Understanding the reasons behind a failed request will allow you to develop strategies to deal with each case. Essentially, we can talk of <strong>requests that timed out (there’s no response from the server) and requests that returned an error</strong>.</p>
+<p>Let’s see each one.</p>
+<h4 id="Timed-out"><a href="#Timed-out" class="headerlink" title="Timed out"></a>Timed out</h4><p>A request may time out, resulting in no response from the server. That can happen for several reasons, such as overloaded servers, problems with how the server responds, or slow network connections.</p>
+<p>When faced with timeout scenarios, consider checking your internet connection, as a stable connection may suggest the problem is server related.</p>
+<p>You can <a href="https://requests.readthedocs.io/en/latest/user/quickstart/#errors-and-exceptions">catch exceptions</a> related to timeouts, such as <code>requests.Timeout</code>, and implement a Python retry mechanism conditionally or with strategies like exponential backoff. We’ll look at these later on.</p>
+<h4 id="Returned-an-Error"><a href="#Returned-an-Error" class="headerlink" title="Returned an Error"></a>Returned an Error</h4><p>When a request is unsuccessful, it’ll most often return an error response, which typically comes with a specific status code and an error message. The first tells what went wrong, and the second includes additional information that can provide insights into the actual problem. For instance:</p>
+<p>Your first approach to addressing this scenario is to review both the status code and error message while ensuring that the request is properly formed. If you suspect that the error results from a temporary problem or server issues, you may retry the request with caution.</p>
+<p>Frustrated that your web scrapers are blocked once and again?</p>
+<h3 id="Status-Codes-for-a-Python-Requests-Retry-Loop"><a href="#Status-Codes-for-a-Python-Requests-Retry-Loop" class="headerlink" title="Status Codes for a Python Requests Retry Loop"></a>Status Codes for a Python Requests Retry Loop</h3><p>The different errors in client-server communications are in the 4xx and 5xx code ranges. They include:</p>
+<ul>
+<li>400 Bad Request.</li>
+<li>401 Unauthorized.</li>
+<li>403 Forbidden.</li>
+<li>404 Not Found.</li>
+<li>405 Method Not Allowed.</li>
+<li>408 Request Timeout.</li>
+<li>429 Too Many Requests.</li>
+<li>500 Internal Server Error.</li>
+<li>501 Not Implemented.</li>
+<li>502 Bad Gateway.</li>
+<li>503 Service Unavailable.</li>
+<li>504 Gateway Timeout.</li>
+<li>505 HTTP Version Not Supported.</li>
+</ul>
+<p><strong>The most common ones you’ll see while web scraping are:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Error Code</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>403 Forbidden</td>
+<td>The server understands the request but won’t fulfill it because it doesn’t have the right permissions or access.</td>
+</tr>
+<tr>
+<td>429 Too Many Requests</td>
+<td>The server has received too many requests from the same IP within a given time frame, so it’s rate-limiting in web scraping.</td>
+</tr>
+<tr>
+<td>500 Internal Server Error</td>
+<td>A generic server error occurred, indicating that something went wrong on the server while processing the request.</td>
+</tr>
+<tr>
+<td>502 Bad Gateway</td>
+<td>The server acting as a gateway or proxy received an invalid response from an upstream server.</td>
+</tr>
+<tr>
+<td>503 Service Unavailable</td>
+<td>The server is too busy or undergoing maintenance and can’t handle the request right now.</td>
+</tr>
+<tr>
+<td>504 Gateway Timeout</td>
+<td>An upstream server didn’t respond quickly enough to the gateway or proxy.</td>
+</tr>
+</tbody></table>
+<p>You can check out the MDN docs for more information on <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status">HTTP response status codes</a>.</p>
+<h3 id="Number-of-Retries"><a href="#Number-of-Retries" class="headerlink" title="Number of Retries"></a>Number of Retries</h3><p>Setting the number of retries for a failed request depends on several considerations, such as the type of request error and the response time. Errors like <code>429 Too Many Requests</code> are temporary and should have more retries than those that aren’t. </p>
+<p>While there’s no <em>best</em> maximum number of retries, it’s recommended to set a reasonable limit to avoid indefinite retries and potential performance issues. You can start with small values like three or five.</p>
+<h3 id="Delay"><a href="#Delay" class="headerlink" title="Delay"></a>Delay</h3><p>Delays between requests should be set to prevent websites and APIs from becoming overloaded and to maintain compliance with rate limits.</p>
+<h4 id="Fixed-or-Random-Delay"><a href="#Fixed-or-Random-Delay" class="headerlink" title="Fixed or Random Delay"></a>Fixed or Random Delay</h4><p>A fixed delay between requests can be introduced using the <code>time.sleep()</code> function from the time module. And to add randomness to the delay, you can employ a combination of the <code>time.sleep()</code> function and the <code>random</code> module.</p>
+<p>Just like the number of retries, there isn’t a rule set in stone for how long the delay should be, but you can experiment with different reasonable delay values around 300ms to find an optimal balance. </p>
+<h4 id="Backoff-Strategy-for-the-Delays"><a href="#Backoff-Strategy-for-the-Delays" class="headerlink" title="Backoff Strategy for the Delays"></a>Backoff Strategy for the Delays</h4><p>The backoff strategy is a commonly used technique for setting increasing delays between retries instead of fixed or random ones. Each request increases the delay by an exponential backoff factor, usually greater than one. This approach generally helps to handle temporary issues while avoiding overloading servers.</p>
+<p>The backoff algorithm is this:</p>
+<p>For example, here are the delay sequences for backoff factors 2, 3, and 10:</p>
+<h2 id="Best-Methods-to-Retry-Python-Requests"><a href="#Best-Methods-to-Retry-Python-Requests" class="headerlink" title="Best Methods to Retry Python Requests"></a>Best Methods to Retry Python Requests</h2><p>In this section, we’ll look at the best methods to retry Python Requests. They include:</p>
+<ul>
+<li>Use an existing retry wrapper: Python Sessions with HTTPAdapter.</li>
+<li>Code your retry wrapper.</li>
+</ul>
+<p>We recommend the first one, but the second one might be suitable in some scenarios.</p>
+<h3 id="Method-1-Use-an-Existing-Retry-Wrapper-Python-Sessions-with-HTTPAdapter"><a href="#Method-1-Use-an-Existing-Retry-Wrapper-Python-Sessions-with-HTTPAdapter" class="headerlink" title="Method 1: Use an Existing Retry Wrapper: Python Sessions with HTTPAdapter"></a>Method 1: Use an Existing Retry Wrapper: Python Sessions with HTTPAdapter</h3><p>Python Requests uses the <a href="https://urllib3.readthedocs.io/en/stable/index.html">urllib3 HTTP client</a> under the hood. With the Python Requests’ <a href="https://docs.python-requests.org/en/v1.2.3/api/#requests.adapters.HTTPAdapter">HTTP adapter class</a> and the <a href="https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Retry">Retry utility class</a> from the <code>urllib3</code> package, you can set up retries in Python. <strong>The HTTPAdapter class lets you specify a retry strategy</strong> and also change the behavior of requests.</p>
+<h4 id="Retry-on-Failure"><a href="#Retry-on-Failure" class="headerlink" title="Retry on Failure"></a>Retry on Failure</h4><p>To implement the Python Requests retry logic in case of failure, start by defining options.</p>
+<p>We set the maximum number of requests to <code>4</code> and specified that the request should only be reattempted if the error has a status code of either <code>429</code>, <code>500</code>, <code>502</code>, <code>503</code>, or <code>504</code>.</p>
+<p>The retry strategy is passed to the HTTPAdapter when creating a new <code>adapter</code> object. The adapter is then mounted to a session object, which is used to make all requests.</p>
+<h4 id="Sessions-and-HTTPAdapter-with-a-Backoff-Strategy"><a href="#Sessions-and-HTTPAdapter-with-a-Backoff-Strategy" class="headerlink" title="Sessions and HTTPAdapter with a Backoff Strategy"></a>Sessions and HTTPAdapter with a Backoff Strategy</h4><p>To use the backoff strategy to set increasing delays between retries, add the <code>backoff_factor</code> parameter in the retry wrapper:</p>
+<h3 id="Method-2-Code-Your-Retry-Wrapper"><a href="#Method-2-Code-Your-Retry-Wrapper" class="headerlink" title="Method 2: Code Your Retry Wrapper"></a>Method 2: Code Your Retry Wrapper</h3><p>Unlike in the previous option, we’ll create a custom wrapper for the retry logic now. That way, you’ll have the flexibility of implementing a custom error handler, logging, and more.</p>
+<h4 id="Python-Requests-Retry-on-Failure"><a href="#Python-Requests-Retry-on-Failure" class="headerlink" title="Python Requests: Retry on Failure"></a>Python Requests: Retry on Failure</h4><p>To keep it easy, let’s create the Python function <code>retry_request</code> to simulate the retry logic implementation of method 1.</p>
+<p>Inside, it takes in the target URL as its first argument, then <code>total</code> for the number of retries, and <code>status_forcelist</code> to specify the type of errors for which to retry the request.</p>
+<h4 id="Retry-Python-Requests-with-a-Backoff-Strategy"><a href="#Retry-Python-Requests-with-a-Backoff-Strategy" class="headerlink" title="Retry Python Requests with a Backoff Strategy"></a>Retry Python Requests with a Backoff Strategy</h4><p>To retry Python Requests with a backoff strategy, take the previous code as a base. Then, create a separate function named <code>backoff_delay</code> to calculate the delay and use the <code>time.sleep()</code> function to make it happen like this:</p>
+<p>Using the <code>backoff_delay</code> function, you’ll have the following:</p>
+<h2 id="Avoid-Getting-Blocked-by-Error-403-with-Python-Requests"><a href="#Avoid-Getting-Blocked-by-Error-403-with-Python-Requests" class="headerlink" title="Avoid Getting Blocked by Error 403 with Python Requests"></a>Avoid Getting Blocked by Error 403 with Python Requests</h2><p>Getting blocked because you’re identified as a bot is the biggest problem when crawling. Some websites may block your IP address or take other measures to prevent you from accessing the site if you are detected as a bot. </p>
+<p>To prove this, let’s attempt to scrape a protected <a href="https://www.g2.com/products/notion/reviews">page on G2.com</a>:</p>
+<p>Run the code, and you’ll get a response like the one below, indicating that you were blocked with a 403 error:</p>
+<h2 id="Best-Practice-Retry-Python-Requests-with-a-Decorator"><a href="#Best-Practice-Retry-Python-Requests-with-a-Decorator" class="headerlink" title="Best Practice: Retry Python Requests with a Decorator"></a>Best Practice: Retry Python Requests with a Decorator</h2><p>Using a decorator to implement retries is a cleaner approach, as the Python Requests retry logic contained in the decorator can be easily applied to multiple methods or functions.</p>
+<p>Instead of implementing the decorator yourself, you can use <a href="https://github.com/jd/tenacity">Tenacity</a>, a community-maintained package that simplifies the process of adding retry behavior to requests.</p>
+<p>Start by installing Tenacity:</p>
+<p><em>Italic</em> The <code>retry</code> decorator from Tenacity takes in arguments like <code>stop</code> for the maximum number of retries and <code>wait</code> for details, <a href="https://tenacity.readthedocs.io/en/latest/">among others</a>.</p>
+<p>Here you have it implemented in a scraper:</p>
+<h2 id="POST-Retry-with-Python-Requests"><a href="#POST-Retry-with-Python-Requests" class="headerlink" title="POST Retry with Python Requests"></a>POST Retry with Python Requests</h2><p>In addition to the <code>GET</code> method request we’ve been using, <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods">other methods</a> can be retried, such as <code>POST</code> for creating new resources on the server and <code>PUT</code> for updating existing resources. For example, to submit a form.</p>
+<p>You can use Tenacity to make a <code>POST</code> request by replacing <code>requests.get</code> with <code>requests.post</code>. Check out line 10:</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>Handling failed requests is critical to building a robust and reliable web scraper. In this tutorial, we looked into the importance of retrying failed requests and what to know to code them. Now you know:</p>
+<ul>
+<li>The most important Python Requests retry logic considerations.</li>
+<li>The two best options for retries.</li>
+<li>How to retry requests with different HTTP methods.</li>
+</ul>
+<p>One of the biggest challenges is getting access denied because you’re detected as a bot. To overcome that barrier, a popular web scraping API like ZenRows will help prevent you from getting blocked and save you tons of time and effort against anti-bot measures. </p>
+<h2 id="Frequent-Questions"><a href="#Frequent-Questions" class="headerlink" title="Frequent Questions"></a>Frequent Questions</h2><h3 id=""><a href="#" class="headerlink" title=""></a></h3><p>How Do You Retry a Request in Python?</p>
+<p>You can retry a request in Python by either using the existing wrapper from Requests or creating a custom wrapper with loops and exception handling in order to implement a retry mechanism.</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><p>How Do You Force Keep-Alive in Python Requests?</p>
+<p>You can force Keep-Alive in Python Requests by using the <code>Session</code> object and setting the Connection header to <code>keep-alive</code>. That lets the underlying TCP connection be used for other requests to the same server, which improves performance when making multiple requests to the same endpoint.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Create a session object </span></span><br><span class="line">session = requests.Session() </span><br><span class="line"><span class="comment"># Set keep-alive for all requests made through this session </span></span><br><span class="line">session.headers.update(&#123;<span class="string">&#x27;Connection&#x27;</span>: <span class="string">&#x27;keep-alive&#x27;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a></h3><p>How Do You Handle Timeouts in Python Requests?</p>
+<p>You can handle timeouts using the <code>timeout</code> parameter, which specifies the maximum amount of time (in seconds) that the request should wait for a response before raising a timeout exception.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># pip install requests </span></span><br><span class="line"><span class="keyword">import</span> requests </span><br><span class="line">response = requests.get(<span class="string">&#x27;https://example.com&#x27;</span>, timeout=<span class="number">15</span>) </span><br><span class="line"><span class="built_in">print</span>(response.text)</span><br></pre></td></tr></table></figure>
+
+<h3 id="-3"><a href="#-3" class="headerlink" title=""></a></h3><p>What is Error Code 404 in Python Requests?</p>
+<p>Error code 404 is the same as the HTTP status <code>Not Found</code>, which means that the server couldn’t find the requested resource.</p>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>在R语言中使用ggplot2绘图</title>
+    <url>/posts/85f45869.html</url>
+    <content><![CDATA[<p>In order to focus on the construction of the different plots and the use of <code>&#123;ggplot2&#125;</code>, we will restrict ourselves to drawing basic (yet beautiful) plots without unnecessary layers. For the sake of completeness, we will briefly discuss and illustrate different layers to further personalize a plot at the end of the article (see this <a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#further-personalization">section</a>).</p>
+<p>Note that if you still struggle to create plots with <code>&#123;ggplot2&#125;</code> after reading this tutorial, you may find the <a href="https://statsandr.com/blog/rstudio-addins-or-how-to-make-your-coding-life-easier/#esquisse">{esquisse} addin</a> useful. This addin allows you to <strong>interactively</strong> (that is, by dragging and dropping variables) create plots with the <code>&#123;ggplot2&#125;</code> package. Give it a try!</p>
+<h2 id="Scatter-plot"><a href="#Scatter-plot" class="headerlink" title="Scatter plot"></a>Scatter plot</h2><p>We start by creating a <a href="https://statsandr.com/blog/descriptive-statistics-in-r/#scatterplot">scatter plot</a> using <code>geom_point</code>. Remember that a scatter plot is used to visualize the relation between two <a href="https://statsandr.com/blog/variable-types-and-examples/#quantitative">quantitative variables</a>.</p>
+<ol>
+<li>We start by specifying the data:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) # data</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-4-1.png"></p>
+<ol start="2">
+<li>Then we add the variables to be represented with the <code>aes()</code> function:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) + # data</span><br><span class="line">  aes(x = displ, y = hwy) # variables</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-5-1.png"></p>
+<ol start="3">
+<li>Finally, we indicate the type of plot:</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) + # data</span><br><span class="line">  aes(x = displ, y = hwy) + # variables</span><br><span class="line">  geom_point() # type of plot</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-6-1.png"></p>
+<p>You will also sometimes see the aesthetic elements (<code>aes()</code> with the variables) inside the <code>ggplot()</code> function in addition to the dataset:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(mpg, aes(x = displ, y = hwy)) +</span><br><span class="line">  geom_point()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-7-1.png"></p>
+<p>This second method gives the exact same plot than the first method. I tend to prefer the first method over the second for better readability, but this is more a matter of taste so the choice is up to you.</p>
+<h2 id="Line-plot"><a href="#Line-plot" class="headerlink" title="Line plot"></a>Line plot</h2><p><a href="https://statsandr.com/blog/descriptive-statistics-in-r/#line-plot">Line plots</a>, particularly useful in time series or finance, can be created similarly but by using <code>geom_line()</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = displ, y = hwy) +</span><br><span class="line">  geom_line()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-8-1.png"></p>
+<p>(Note that this might not be the most appropriate plot since there are multiple points for each value of <code>displ</code>, but this is just an example to show how to create a line plot.)</p>
+<h2 id="Combination-of-line-and-points"><a href="#Combination-of-line-and-points" class="headerlink" title="Combination of line and points"></a>Combination of line and points</h2><p>An advantage of <code>&#123;ggplot2&#125;</code> is the ability to combine several types of plots and its flexibility in designing it. For instance, we can add a line to a scatter plot by simply adding a layer to the initial scatter plot:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = displ, y = hwy) +</span><br><span class="line">  geom_point() +</span><br><span class="line">  geom_line() # add line</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-9-1.png"></p>
+<h2 id="Histogram"><a href="#Histogram" class="headerlink" title="Histogram"></a>Histogram</h2><p>A <a href="https://statsandr.com/blog/descriptive-statistics-in-r/#histogram">histogram</a> (useful to visualize distributions and detect potential <a href="https://statsandr.com/blog/outliers-detection-in-r/">outliers</a>) can be plotted using <code>geom_histogram()</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = hwy) +</span><br><span class="line">  geom_histogram()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-10-1.png"></p>
+<p>By default, the number of bins is equal to 30. You can change this value using the <code>bins</code> argument inside the <code>geom_histogram()</code> function:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = hwy) +</span><br><span class="line">  geom_histogram(bins = round(sqrt(nrow(dat))))</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-11-1.png"></p>
+<p>Here I specify the number of bins to be equal to the square root of the number of observations (following Sturge’s rule) but you can specify any integer number.</p>
+<h2 id="Density-plot"><a href="#Density-plot" class="headerlink" title="Density plot"></a>Density plot</h2><p><a href="https://statsandr.com/blog/descriptive-statistics-in-r/#density-plot">Density plots</a> can be created using <code>geom_density()</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = hwy) +</span><br><span class="line">  geom_density()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-12-1.png"></p>
+<h2 id="Combination-of-histogram-and-densities"><a href="#Combination-of-histogram-and-densities" class="headerlink" title="Combination of histogram and densities"></a>Combination of histogram and densities</h2><p>We can also superimpose a histogram and a density curve on the same plot:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = hwy, y = after_stat(density)) +</span><br><span class="line">  geom_histogram() +</span><br><span class="line">  geom_density()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-13-1.png"></p>
+<p>Or superimpose several densities:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = hwy, color = drv, fill = drv) +</span><br><span class="line">  geom_density(alpha = 0.25) # add transparency</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-14-1.png"></p>
+<p>The argument <code>alpha = 0.25</code> has been added for some transparency. More information about this argument can be found in this <a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#further-personalization">section</a>.</p>
+<h2 id="Dotplot"><a href="#Dotplot" class="headerlink" title="Dotplot"></a>Dotplot</h2><p>A <a href="https://statsandr.com/blog/descriptive-statistics-in-r/#dotplot">dotplot</a> in <code>&#123;ggplot2&#125;</code> can be built with <code>geom_dotplot()</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Dotplot for one variable</span><br><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = &quot;&quot;, y = hwy) +</span><br><span class="line">  geom_dotplot(binaxis = &quot;y&quot;, stackdir = &quot;center&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-15-1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Dotplot by factor</span><br><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv, y = hwy) +</span><br><span class="line">  geom_dotplot(</span><br><span class="line">    binaxis = &quot;y&quot;, stackdir = &quot;center&quot;,</span><br><span class="line">    dotsize = 0.75 # decrease dot size</span><br><span class="line">  )</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-15-2.png"></p>
+<p>Dotplots are more appropriate with small samples (because the plot may be hard to read with too many points). For large samples, a boxplot may be used.</p>
+<p>For the interested reader, see many personalization that is possible with a dotplot in this <a href="http://www.sthda.com/english/wiki/ggplot2-dot-plot-quick-start-guide-r-software-and-data-visualization">tutorial</a>.</p>
+<h2 id="Boxplot"><a href="#Boxplot" class="headerlink" title="Boxplot"></a>Boxplot</h2><p>A <a href="https://statsandr.com/blog/descriptive-statistics-in-r/#boxplot">boxplot</a> (also very useful to visualize distributions and detect potential <a href="https://statsandr.com/blog/outliers-detection-in-r/">outliers</a>) can be plotted using <code>geom_boxplot()</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Boxplot for one variable</span><br><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = &quot;&quot;, y = hwy) +</span><br><span class="line">  geom_boxplot()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-16-1.png"></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Boxplot by factor</span><br><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv, y = hwy) +</span><br><span class="line">  geom_boxplot()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-16-2.png"></p>
+<p>It is also possible to plot the points on the boxplot with <code>geom_jitter()</code>, and to vary the width of the boxes according to the size (i.e., the number of observations) of each level with <code>varwidth = TRUE</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv, y = hwy) +</span><br><span class="line">  geom_boxplot(varwidth = TRUE) + # vary boxes width according to n obs.</span><br><span class="line">  geom_jitter(alpha = 0.25, width = 0.2) # adds random noise and limit its width</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-17-1.png"></p>
+<p>The <code>geom_jitter()</code> layer adds some random variation to each point in order to prevent them from overlapping (an issue known as overplotting).<a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#fn1"><sup>1</sup></a> Moreover, the <code>alpha</code> argument adds some transparency to the points (see more in this <a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#further-personalization">section</a>) to keep the focus on the boxes and not on the points.</p>
+<p>Finally, it is also possible to divide boxplots into several panels according to the levels of a <a href="https://statsandr.com/blog/variable-types-and-examples/#qualitative">qualitative variable</a>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv, y = hwy) +</span><br><span class="line">  geom_boxplot(varwidth = TRUE) + # vary boxes width according to n obs.</span><br><span class="line">  geom_jitter(alpha = 0.25, width = 0.2) + # adds random noise and limit its width</span><br><span class="line">  facet_wrap(~year) # divide into 2 panels</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-18-1.png"></p>
+<p>For a visually more appealing plot, it is also possible to use some colors for the boxes depending on the x variable:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv, y = hwy, fill = drv) + # add color to boxes with fill</span><br><span class="line">  geom_boxplot(varwidth = TRUE) + # vary boxes width according to n obs.</span><br><span class="line">  geom_jitter(alpha = 0.25, width = 0.2) + # adds random noise and limit its width</span><br><span class="line">  facet_wrap(~year) + # divide into 2 panels</span><br><span class="line">  theme(legend.position = &quot;none&quot;) # remove legend</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-19-1.png"></p>
+<p>In that case, it best to remove the legend as it becomes redundant. See more information about the legend in this <a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#legend">section</a>.</p>
+<p>If you are unhappy with the default colors provided in <code>&#123;ggplot2&#125;</code>, you can change them manually with the <code>scale_fill_manual()</code> layer:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv, y = hwy, fill = drv) + # add color to boxes with fill</span><br><span class="line">  geom_boxplot(varwidth = TRUE) + # vary boxes width according to n obs.</span><br><span class="line">  geom_jitter(alpha = 0.25, width = 0.2) + # adds random noise and limit its width</span><br><span class="line">  facet_wrap(~year) + # divide into 2 panels</span><br><span class="line">  theme(legend.position = &quot;none&quot;) + # remove legend</span><br><span class="line">  scale_fill_manual(values = c(&quot;darkred&quot;, &quot;darkgreen&quot;, &quot;steelblue&quot;)) # change fill color manually</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-20-1.png"></p>
+<h2 id="Barplot"><a href="#Barplot" class="headerlink" title="Barplot"></a>Barplot</h2><p>A <a href="https://statsandr.com/blog/descriptive-statistics-in-r/#barplot">barplot</a> (useful to visualize qualitative variables) can be plotted using <code>geom_bar()</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv) +</span><br><span class="line">  geom_bar()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-21-1.png"></p>
+<p>Bars’ heights correspond to the observed frequencies (i.e., the number of observations) for each level of the variable of interest (<code>drv</code> in our case).</p>
+<p><strong>Tip</strong>: by default, the order of the bars follows the initial order (by alphabetical order or numerical order if you did not change it). If you want to order the levels by frequency (largest first), use the <code>fct_infreq()</code> function from the <code>&#123;forcats&#125;</code> package.</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">library(forcats)</span><br><span class="line"></span><br><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = fct_infreq(drv)) + # order by frequency</span><br><span class="line">  geom_bar()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-22-1.png"></p>
+<p>If you want to order levels in an increasing order (i.e., category with the smallest frequency first), use the <code>fct_rev()</code> in addition to the <code>fct_infreq()</code> function:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = fct_rev(fct_infreq(drv))) + # order by frequency</span><br><span class="line">  geom_bar()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-23-1.png"></p>
+<p>(Label for the x-axis can then easily be edited with the <code>labs()</code> function. See <a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#title-and-axis-labels">below</a> for more information.)</p>
+<p>Again, for a more appealing plot, we can add some colors to the bars with the <code>fill</code> argument:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv, fill = drv) + # add colors to bars</span><br><span class="line">  geom_bar() +</span><br><span class="line">  theme(legend.position = &quot;none&quot;) # remove legend</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-24-1.png"></p>
+<p>We can also create a barplot with two qualitative variables:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  aes(x = drv, fill = year) + # fill by years</span><br><span class="line">  geom_bar()</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-25-1.png"></p>
+<p>In order to compare proportions across groups, it is best to make each bar the same height using <code>position = &quot;fill&quot;</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">ggplot(dat) +</span><br><span class="line">  geom_bar(aes(x = drv, fill = year), position = &quot;fill&quot;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-26-1.png"></p>
+<p>To draw the bars next to each other for each group, use <code>position = &quot;dodge&quot;</code>:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_bar<span class="punctuation">(</span>aes<span class="punctuation">(</span>x <span class="operator">=</span> drv<span class="punctuation">,</span> fill <span class="operator">=</span> year<span class="punctuation">)</span><span class="punctuation">,</span> position <span class="operator">=</span> <span class="string">&quot;dodge&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-27-1.png"></p>
+<h2 id="Raincloud-plot"><a href="#Raincloud-plot" class="headerlink" title="Raincloud plot"></a>Raincloud plot</h2><p>A raincloud plot is a graph that combines 3 visualizations:</p>
+<ol>
+<li>a density plot,</li>
+<li>a boxplot,</li>
+<li>and the raw data in the form of a dotplot or jittered points.</li>
+</ol>
+<p>The advantage of this plot is that it illustrates, <strong>all at once</strong>, the distribution (with the density curve), the summary measures (first, second and third <a href="https://statsandr.com/blog/descriptive-statistics-in-r/#first-and-third-quartile">quartiles</a>, and maximum&#x2F;mininum without <a href="https://statsandr.com/blog/outliers-detection-in-r/">outliers</a> thanks to the boxplot) and the number of observations (either via a dotplot or via jittered points).</p>
+<p>Let’s illustrate the raincloud plot, first with jittered points (more appropriate with large samples):<a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#fn2"><sup>2</sup></a></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">library<span class="punctuation">(</span>tidyverse<span class="punctuation">)</span></span><br><span class="line">library<span class="punctuation">(</span>ggdist<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># density plot:</span></span><br><span class="line">dat <span class="operator">%&gt;%</span></span><br><span class="line">  ggplot<span class="punctuation">(</span>aes<span class="punctuation">(</span>x <span class="operator">=</span> drv<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">,</span> fill <span class="operator">=</span> drv<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  stat_halfeye<span class="punctuation">(</span></span><br><span class="line">    adjust <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># set the smoothing parameter</span></span><br><span class="line">    width <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># set the height of the curves</span></span><br><span class="line">    justification <span class="operator">=</span> <span class="operator">-</span><span class="number">0.2</span><span class="punctuation">,</span> <span class="comment"># move curves to the right</span></span><br><span class="line">    .width <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span> point_colour <span class="operator">=</span> <span class="literal">NA</span> <span class="comment"># remove interval present by default</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  <span class="comment"># boxplot:</span></span><br><span class="line">  geom_boxplot<span class="punctuation">(</span></span><br><span class="line">    width <span class="operator">=</span> <span class="number">0.12</span><span class="punctuation">,</span> <span class="comment"># width of boxes</span></span><br><span class="line">    outlier.color <span class="operator">=</span> <span class="literal">NA</span><span class="punctuation">,</span> <span class="comment"># remove color of outliers</span></span><br><span class="line">    alpha <span class="operator">=</span> <span class="number">0.5</span> <span class="comment"># add transparency</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  <span class="comment"># jittered points:</span></span><br><span class="line">  geom_point<span class="punctuation">(</span>aes<span class="punctuation">(</span>colour <span class="operator">=</span> drv<span class="punctuation">)</span><span class="punctuation">,</span> <span class="comment"># add color on points</span></span><br><span class="line">    size <span class="operator">=</span> <span class="number">1.3</span><span class="punctuation">,</span> <span class="comment"># size of points</span></span><br><span class="line">    alpha <span class="operator">=</span> <span class="number">.3</span><span class="punctuation">,</span> <span class="comment"># add transparency</span></span><br><span class="line">    position <span class="operator">=</span> position_jitter<span class="punctuation">(</span> <span class="comment"># obtain shifted points</span></span><br><span class="line">      seed <span class="operator">=</span> <span class="number">1</span><span class="punctuation">,</span> <span class="comment"># set seed for same random representation</span></span><br><span class="line">      width <span class="operator">=</span> <span class="number">.09</span> <span class="comment"># manage the width of the offset</span></span><br><span class="line">    <span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  <span class="comment"># further personalization:</span></span><br><span class="line">  coord_flip<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span> <span class="comment"># rotate plot</span></span><br><span class="line">  theme<span class="punctuation">(</span>legend.position <span class="operator">=</span> <span class="string">&quot;none&quot;</span><span class="punctuation">)</span> <span class="comment"># remove legend</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-28-1.png"></p>
+<p>Now the same chart but with dotplots this time (more appropriate with small <a href="https://statsandr.com/blog/what-is-the-difference-between-population-and-sample/">samples</a>):</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># density plot:</span></span><br><span class="line">dat <span class="operator">%&gt;%</span></span><br><span class="line">  sample_n<span class="punctuation">(</span><span class="number">100</span><span class="punctuation">)</span> <span class="operator">%&gt;%</span> <span class="comment"># random sample of size 100</span></span><br><span class="line">  ggplot<span class="punctuation">(</span>aes<span class="punctuation">(</span>x <span class="operator">=</span> drv<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">,</span> fill <span class="operator">=</span> drv<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  stat_halfeye<span class="punctuation">(</span></span><br><span class="line">    adjust <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># set the smoothing parameter</span></span><br><span class="line">    width <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># set the height of the curves</span></span><br><span class="line">    justification <span class="operator">=</span> <span class="operator">-</span><span class="number">0.2</span><span class="punctuation">,</span> <span class="comment"># move curves to the right</span></span><br><span class="line">    .width <span class="operator">=</span> <span class="number">0</span><span class="punctuation">,</span> point_colour <span class="operator">=</span> <span class="literal">NA</span> <span class="comment"># remove interval present by default</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  <span class="comment"># boxplot:</span></span><br><span class="line">  geom_boxplot<span class="punctuation">(</span></span><br><span class="line">    width <span class="operator">=</span> <span class="number">0.12</span><span class="punctuation">,</span> <span class="comment"># width of boxes</span></span><br><span class="line">    outlier.color <span class="operator">=</span> <span class="literal">NA</span><span class="punctuation">,</span> <span class="comment"># remove color of outliers</span></span><br><span class="line">    alpha <span class="operator">=</span> <span class="number">0.5</span> <span class="comment"># add transparency</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  <span class="comment"># dotplot:</span></span><br><span class="line">  stat_dots<span class="punctuation">(</span></span><br><span class="line">    dotsize <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># size of points</span></span><br><span class="line">    side <span class="operator">=</span> <span class="string">&quot;left&quot;</span><span class="punctuation">,</span> <span class="comment"># place points on opposite side of density curve</span></span><br><span class="line">    justification <span class="operator">=</span> <span class="number">1.1</span><span class="punctuation">,</span> <span class="comment"># move points away from boxplot</span></span><br><span class="line">    binwidth <span class="operator">=</span> <span class="number">1</span> <span class="comment"># group points together</span></span><br><span class="line">  <span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  <span class="comment"># further personalization:</span></span><br><span class="line">  coord_flip<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span> <span class="comment"># rotate plot</span></span><br><span class="line">  theme<span class="punctuation">(</span>legend.position <span class="operator">=</span> <span class="string">&quot;none&quot;</span><span class="punctuation">)</span> <span class="comment"># remove legend</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-29-1.png"></p>
+<p>The code is much longer compared to the other plots, but the only line(s) to edit to adapt to your dataset is the aesthetics (<code>aes()</code>). The rest is mainly adjustments that should not be changed.</p>
+<p>You may have notice that at the end of the code, there are some personalization which allow to improve the plot even further. The most common personalization are presented in the next section.</p>
+<h2 id="Further-personalization"><a href="#Further-personalization" class="headerlink" title="Further personalization"></a>Further personalization</h2><h3 id="Title-and-axis-labels"><a href="#Title-and-axis-labels" class="headerlink" title="Title and axis labels"></a>Title and axis labels</h3><p>The first things to personalize in a plot is the labels to make the plot more informative to the audience. We can easily add a title, subtitle, caption and edit axis labels with the <code>labs()</code> function:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> displ<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">p <span class="operator">+</span> labs<span class="punctuation">(</span></span><br><span class="line">  title <span class="operator">=</span> <span class="string">&quot;Fuel efficiency for 38 popular models of car&quot;</span><span class="punctuation">,</span></span><br><span class="line">  subtitle <span class="operator">=</span> <span class="string">&quot;Period 1999-2008&quot;</span><span class="punctuation">,</span></span><br><span class="line">  caption <span class="operator">=</span> <span class="string">&quot;Data: ggplot2::mpg. See more at statsandr.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">  x <span class="operator">=</span> <span class="string">&quot;Engine displacement (litres)&quot;</span><span class="punctuation">,</span></span><br><span class="line">  y <span class="operator">=</span> <span class="string">&quot;Highway miles per gallon (mpg)&quot;</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-30-1.png"></p>
+<p>As you can see in the above code, you can save one or more layers of the plot in an object for later use.</p>
+<p>This way, you can save your “main” plot, and add more layers of personalization until you get the desired output. Here we saved the main scatter plot in an object called <code>p</code> and we will refer to it for the subsequent personalization.</p>
+<p>You can also edit the alignment, the size and the shape of the title and subtitle via the <code>theme()</code> layer and the <code>element_text()</code> function:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> labs<span class="punctuation">(</span></span><br><span class="line">  title <span class="operator">=</span> <span class="string">&quot;Fuel efficiency for 38 popular models of car&quot;</span><span class="punctuation">,</span></span><br><span class="line">  subtitle <span class="operator">=</span> <span class="string">&quot;Period 1999-2008&quot;</span><span class="punctuation">,</span></span><br><span class="line">  caption <span class="operator">=</span> <span class="string">&quot;Data: ggplot2::mpg. See more at statsandr.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">  x <span class="operator">=</span> <span class="string">&quot;Engine displacement (litres)&quot;</span><span class="punctuation">,</span></span><br><span class="line">  y <span class="operator">=</span> <span class="string">&quot;Highway miles per gallon (mpg)&quot;</span></span><br><span class="line"><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span></span><br><span class="line">    plot.title <span class="operator">=</span> element_text<span class="punctuation">(</span></span><br><span class="line">      hjust <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># center</span></span><br><span class="line">      size <span class="operator">=</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">      color <span class="operator">=</span> <span class="string">&quot;steelblue&quot;</span><span class="punctuation">,</span></span><br><span class="line">      face <span class="operator">=</span> <span class="string">&quot;bold&quot;</span></span><br><span class="line">    <span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    plot.subtitle <span class="operator">=</span> element_text<span class="punctuation">(</span></span><br><span class="line">      hjust <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># center</span></span><br><span class="line">      size <span class="operator">=</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">      color <span class="operator">=</span> <span class="string">&quot;gray&quot;</span><span class="punctuation">,</span></span><br><span class="line">      face <span class="operator">=</span> <span class="string">&quot;italic&quot;</span></span><br><span class="line">    <span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-31-1.png"></p>
+<p>If the title or subtitle is long and you want to divide it into multiple lines, use <code>\n</code>:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> labs<span class="punctuation">(</span></span><br><span class="line">  title <span class="operator">=</span> <span class="string">&quot;Fuel efficiency for 38 popular \n models of car&quot;</span><span class="punctuation">,</span></span><br><span class="line">  subtitle <span class="operator">=</span> <span class="string">&quot;Period 1999-2008&quot;</span><span class="punctuation">,</span></span><br><span class="line">  caption <span class="operator">=</span> <span class="string">&quot;Data: ggplot2::mpg. See more at statsandr.com&quot;</span><span class="punctuation">,</span></span><br><span class="line">  x <span class="operator">=</span> <span class="string">&quot;Engine displacement (litres)&quot;</span><span class="punctuation">,</span></span><br><span class="line">  y <span class="operator">=</span> <span class="string">&quot;Highway miles per gallon (mpg)&quot;</span></span><br><span class="line"><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span></span><br><span class="line">    plot.title <span class="operator">=</span> element_text<span class="punctuation">(</span></span><br><span class="line">      hjust <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># center</span></span><br><span class="line">      size <span class="operator">=</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">      color <span class="operator">=</span> <span class="string">&quot;steelblue&quot;</span><span class="punctuation">,</span></span><br><span class="line">      face <span class="operator">=</span> <span class="string">&quot;bold&quot;</span></span><br><span class="line">    <span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    plot.subtitle <span class="operator">=</span> element_text<span class="punctuation">(</span></span><br><span class="line">      hjust <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">,</span> <span class="comment"># center</span></span><br><span class="line">      size <span class="operator">=</span> <span class="number">10</span><span class="punctuation">,</span></span><br><span class="line">      color <span class="operator">=</span> <span class="string">&quot;gray&quot;</span><span class="punctuation">,</span></span><br><span class="line">      face <span class="operator">=</span> <span class="string">&quot;italic&quot;</span></span><br><span class="line">    <span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-32-1.png"></p>
+<h3 id="Axis-ticks"><a href="#Axis-ticks" class="headerlink" title="Axis ticks"></a>Axis ticks</h3><p>Axis ticks can be adjusted using <code>scale_x_continuous()</code> and <code>scale_y_continuous()</code> for the x and y-axis, respectively:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Adjust ticks</span></span><br><span class="line">p <span class="operator">+</span> scale_x_continuous<span class="punctuation">(</span>breaks <span class="operator">=</span> seq<span class="punctuation">(</span>from <span class="operator">=</span> <span class="number">1</span><span class="punctuation">,</span> to <span class="operator">=</span> <span class="number">7</span><span class="punctuation">,</span> by <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span> <span class="comment"># x-axis</span></span><br><span class="line">  scale_y_continuous<span class="punctuation">(</span>breaks <span class="operator">=</span> seq<span class="punctuation">(</span>from <span class="operator">=</span> <span class="number">10</span><span class="punctuation">,</span> to <span class="operator">=</span> <span class="number">45</span><span class="punctuation">,</span> by <span class="operator">=</span> <span class="number">5</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="comment"># y-axis</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-33-1.png"></p>
+<h3 id="Log-transformations"><a href="#Log-transformations" class="headerlink" title="Log transformations"></a>Log transformations</h3><p>In some cases, it is useful to plot the log transformation of the variables. This can be done with the <code>scale_x_log10()</code> and <code>scale_y_log10()</code> functions:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> scale_x_log10<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_y_log10<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-34-1.png"></p>
+<h3 id="Limits"><a href="#Limits" class="headerlink" title="Limits"></a>Limits</h3><p>The most convenient way to control the limits of the plot is to use again the <code>scale_x_continuous()</code> and <code>scale_y_continuous()</code> functions in addition to the <code>limits</code> argument:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> scale_x_continuous<span class="punctuation">(</span>limits <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">3</span><span class="punctuation">,</span> <span class="number">6</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_y_continuous<span class="punctuation">(</span>limits <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="number">20</span><span class="punctuation">,</span> <span class="number">30</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-35-1.png"></p>
+<p>It is also possible to simply take a subset of the dataset with the <code>subset()</code> or <code>filter()</code> function. See how to <a href="https://statsandr.com/blog/data-manipulation-in-r/#subset-a-data-frame">subset a dataset</a> if you need a reminder.</p>
+<h3 id="Scales-for-better-axis-formats"><a href="#Scales-for-better-axis-formats" class="headerlink" title="Scales for better axis formats"></a>Scales for better axis formats</h3><p>Depending on your data, it is possible to format axes in a certain way with the <code>&#123;scales&#125;</code> package. The format I use the most is <code>comma</code> which formats large numbers in a more-readable way.</p>
+<p>For this example, we multiply both variables by 10000 to have larger numbers and then we apply the format to the y-axis (only to the y-axis so we can see the difference with the x-axis which is not formatted):</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> displ <span class="operator">*</span> <span class="number">10000</span><span class="punctuation">,</span> y <span class="operator">=</span> hwy <span class="operator">*</span> <span class="number">10000</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_y_continuous<span class="punctuation">(</span>labels <span class="operator">=</span> scales<span class="operator">::</span>comma<span class="punctuation">)</span> <span class="comment"># format y-axis</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-36-1.png"></p>
+<p>As you can see, numbers on the y-axis are displayed as 200,000, 300,000, etc. instead of 200000, 300000, etc., which makes it more readable.</p>
+<p>Another common format is <code>percent</code> to display numbers as percentages:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> displ<span class="punctuation">,</span> y <span class="operator">=</span> hwy <span class="operator">/</span> <span class="number">100</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_y_continuous<span class="punctuation">(</span>labels <span class="operator">=</span> scales<span class="operator">::</span>percent<span class="punctuation">)</span> <span class="comment"># format y-axis</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-37-1.png"></p>
+<p>These two formats make large numbers and percentages easier to read. Other formats are possible such as using dollar signs, dates etc. See more information in the <a href="https://scales.r-lib.org/">package’s documentation</a>.</p>
+<h3 id="Legend"><a href="#Legend" class="headerlink" title="Legend"></a>Legend</h3><p>By default, the legend is located to the right side of the plot (when there is a legend to be displayed of course).</p>
+<p>To control the position of the legend, we need to use the <code>theme()</code> function in addition to the <code>legend.position</code> argument:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> <span class="built_in">class</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>legend.position <span class="operator">=</span> <span class="string">&quot;top&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-38-1.png"></p>
+<p>Replace <code>&quot;top&quot;</code> by <code>&quot;left&quot;</code> or <code>&quot;bottom&quot;</code> to change its position and by <code>&quot;none&quot;</code> to remove it.</p>
+<p>The title of the legend can be edited with the <code>labs()</code> layer:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> <span class="built_in">class</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  labs<span class="punctuation">(</span>color <span class="operator">=</span> <span class="string">&quot;Car&#x27;s class&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-39-1.png"></p>
+<p>Note that the argument inside <code>labs()</code> must match the one inside the <code>aes()</code> layer (in this case: <code>color</code>).</p>
+<p>The title of the legend can also be removed with <code>legend.title = element_blank()</code> inside the <code>theme()</code> layer:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> <span class="built_in">class</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span></span><br><span class="line">    legend.title <span class="operator">=</span> element_blank<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">    legend.position <span class="operator">=</span> <span class="string">&quot;bottom&quot;</span></span><br><span class="line">  <span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-40-1.png"></p>
+<p>The legend now appears at the bottom of the plot, without the legend title.</p>
+<h3 id="Shape-color-size-and-transparency"><a href="#Shape-color-size-and-transparency" class="headerlink" title="Shape, color, size and transparency"></a>Shape, color, size and transparency</h3><p>There are a very large number of options to improve the quality of the plot or to add additional information. These include:</p>
+<ul>
+<li>shape,</li>
+<li>size,</li>
+<li>color, and</li>
+<li>alpha (transparency).</li>
+</ul>
+<p>We can for instance change the shape of all points in a scatter plot by adding <code>shape</code> to <code>geom_point()</code>, or vary the shape according to the values taken by another variable (in that case, the <code>shape</code> argument must be inside <code>aes()</code>):<a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#fn3"><sup>3</sup></a></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change shape of all points</span></span><br><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> displ<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span>shape <span class="operator">=</span> <span class="number">4</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-41-1.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change shape of points based on a categorical variable</span></span><br><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> displ<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">,</span> shape <span class="operator">=</span> drv<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-41-2.png"></p>
+<p>Following the same principle, we can modify the color, size and transparency of the points based on a <a href="https://statsandr.com/blog/variable-types-and-examples/#qualitative">qualitative</a> or <a href="https://statsandr.com/blog/variable-types-and-examples/#quantitative">quantitative</a> variable. Here are some examples:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> displ<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Change color for all points</span></span><br><span class="line">p <span class="operator">+</span> geom_point<span class="punctuation">(</span>color <span class="operator">=</span> <span class="string">&quot;steelblue&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-42-1.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change color based on a qualitative variable</span></span><br><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> drv<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-42-2.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change color based on a quantitative variable</span></span><br><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> cty<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-42-3.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change color based on a criterion (median of cty variable)</span></span><br><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> cty <span class="operator">&gt;</span> median<span class="punctuation">(</span>cty<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-42-4.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change size of all points</span></span><br><span class="line">p <span class="operator">+</span> geom_point<span class="punctuation">(</span>size <span class="operator">=</span> <span class="number">4</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-42-5.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change size of points based on a quantitative variable</span></span><br><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>size <span class="operator">=</span> cty<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-42-6.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change transparency based on a quantitative variable</span></span><br><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>alpha <span class="operator">=</span> cty<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-42-7.png"></p>
+<p>We can of course mix several options (shape, color, size, alpha) to build more complex graphics:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> geom_point<span class="punctuation">(</span>size <span class="operator">=</span> <span class="number">0.5</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>color <span class="operator">=</span> drv<span class="punctuation">,</span> shape <span class="operator">=</span> year<span class="punctuation">,</span> alpha <span class="operator">=</span> cty<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-43-1.png"></p>
+<p>If you are unhappy with the default colors, you can change them manually with the <code>scale_colour_manual()</code> layer (for qualitative variables) and the <code>scale_coulour_gradient2()</code> layer (for quantitative variables):</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change color based on a qualitative variable</span></span><br><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> drv<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_colour_manual<span class="punctuation">(</span>values <span class="operator">=</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;red&quot;</span><span class="punctuation">,</span> <span class="string">&quot;blue&quot;</span><span class="punctuation">,</span> <span class="string">&quot;green&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-44-1.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Change color based on a quantitative variable</span></span><br><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> cty<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  scale_colour_gradient2<span class="punctuation">(</span></span><br><span class="line">    low <span class="operator">=</span> <span class="string">&quot;green&quot;</span><span class="punctuation">,</span></span><br><span class="line">    mid <span class="operator">=</span> <span class="string">&quot;gray&quot;</span><span class="punctuation">,</span></span><br><span class="line">    high <span class="operator">=</span> <span class="string">&quot;red&quot;</span><span class="punctuation">,</span></span><br><span class="line">    midpoint <span class="operator">=</span> median<span class="punctuation">(</span>dat<span class="operator">$</span>cty<span class="punctuation">)</span></span><br><span class="line">  <span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-44-2.png"></p>
+<p>For your information, you can emulate <code>&#123;ggplot2&#125;</code> default color palette for a desired number of colors and produce a character vector of HEX colors. For example, with 4 colors:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">library<span class="punctuation">(</span>scales<span class="punctuation">)</span></span><br><span class="line">show_col<span class="punctuation">(</span>hue_pal<span class="punctuation">(</span><span class="punctuation">)</span><span class="punctuation">(</span><span class="number">4</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-45-1.png"></p>
+<h3 id="Text-and-labels"><a href="#Text-and-labels" class="headerlink" title="Text and labels"></a>Text and labels</h3><p>To add a label on a point (for example the row number), we can use the <code>geom_text()</code> and <code>aes()</code> functions:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> geom_text<span class="punctuation">(</span>aes<span class="punctuation">(</span>label <span class="operator">=</span> rownames<span class="punctuation">(</span>dat<span class="punctuation">)</span><span class="punctuation">)</span><span class="punctuation">,</span></span><br><span class="line">  check_overlap <span class="operator">=</span> <span class="literal">TRUE</span><span class="punctuation">,</span></span><br><span class="line">  size <span class="operator">=</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">  vjust <span class="operator">=</span> <span class="operator">-</span><span class="number">1</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-46-1.png"></p>
+<p>To add text on the plot, we use the <code>annotate()</code> function:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> annotate<span class="punctuation">(</span><span class="string">&quot;text&quot;</span><span class="punctuation">,</span></span><br><span class="line">  x <span class="operator">=</span> <span class="number">6</span><span class="punctuation">,</span></span><br><span class="line">  y <span class="operator">=</span> <span class="number">40</span><span class="punctuation">,</span></span><br><span class="line">  label <span class="operator">=</span> <span class="string">&quot;hwy and displ are \n negatively correlated \n (rho = -0.77, p-value &lt; 0.001)&quot;</span><span class="punctuation">,</span></span><br><span class="line">  size <span class="operator">=</span> <span class="number">3</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-47-1.png"></p>
+<p>Read the article on <a href="https://statsandr.com/blog/correlation-coefficient-and-correlation-test-in-r/">correlation coefficient and correlation test in R</a> to see how I computed the correlation coefficient (rho) and the _p_-value of the correlation test.</p>
+<h3 id="Smooth-and-regression-lines"><a href="#Smooth-and-regression-lines" class="headerlink" title="Smooth and regression lines"></a>Smooth and regression lines</h3><p>In a scatter plot, it is possible to add a smooth line fitted to the data:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> geom_smooth<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-48-1.png"></p>
+<p>In the context of simple <a href="https://statsandr.com/blog/multiple-linear-regression-made-simple/">linear regression</a>, it is often the case that the regression line is displayed on the plot.</p>
+<p>This can be done by adding <code>method = lm</code> (<code>lm</code> stands for linear model) in the <code>geom_smooth()</code> layer:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> geom_smooth<span class="punctuation">(</span>method <span class="operator">=</span> lm<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-49-1.png"></p>
+<p>It is also possible to draw a regression line for each level of a categorical variable:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> drv<span class="punctuation">,</span> shape <span class="operator">=</span> drv<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_smooth<span class="punctuation">(</span>method <span class="operator">=</span> lm<span class="punctuation">,</span> se <span class="operator">=</span> <span class="literal">FALSE</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-50-1.png"></p>
+<p>The <code>se = FALSE</code> argument removes the confidence interval around the regression lines.</p>
+<h3 id="Facets"><a href="#Facets" class="headerlink" title="Facets"></a>Facets</h3><p><code>facet_grid</code> allows you to divide the same graphic into several panels according to the values of one or two qualitative variables:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># According to one variable</span></span><br><span class="line">p <span class="operator">+</span> facet_grid<span class="punctuation">(</span>. <span class="operator">~</span> drv<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-51-1.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># According to 2 variables</span></span><br><span class="line">p <span class="operator">+</span> facet_grid<span class="punctuation">(</span>drv <span class="operator">~</span> year<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-51-2.png"></p>
+<p>It is then possible to add a regression line to each facet:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> facet_grid<span class="punctuation">(</span>. <span class="operator">~</span> drv<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_smooth<span class="punctuation">(</span>method <span class="operator">=</span> lm<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-52-1.png"></p>
+<p><code>facet_wrap()</code> can also be used, as illustrated in this <a href="https://statsandr.com/blog/graphics-in-r-with-ggplot2/#boxplot">section</a>.</p>
+<h3 id="Themes"><a href="#Themes" class="headerlink" title="Themes"></a>Themes</h3><p>Several functions are available in the <code>&#123;ggplot2&#125;</code> package to change the theme of the plot.</p>
+<p>The most common themes after the default theme (i.e., <code>theme_gray()</code>) are the black and white (<code>theme_bw()</code>), minimal (<code>theme_minimal()</code>) and classic (<code>theme_classic()</code>) themes:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Black and white theme</span></span><br><span class="line">p <span class="operator">+</span> theme_bw<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-53-1.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Minimal theme</span></span><br><span class="line">p <span class="operator">+</span> theme_minimal<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-53-2.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># Classic theme</span></span><br><span class="line">p <span class="operator">+</span> theme_classic<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-53-3.png"></p>
+<p>I tend to use the minimal theme for most of my <a href="https://statsandr.com/blog/getting-started-in-r-markdown/">R Markdown</a> reports as it brings out the patterns and points and not the layout of the plot, but again this is a matter of personal taste. See more themes at <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">ggplot2.tidyverse.org&#x2F;reference&#x2F;ggtheme.html</a> and in the <code>&#123;ggthemes&#125;</code> package.</p>
+<p>In order to avoid having to change the theme for each plot you create, you can change the theme for the current R session using the <code>theme_set()</code> function as follows:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">theme_set(theme_minimal())</span><br></pre></td></tr></table></figure>
+
+<h3 id="Interactive-plot-with-plotly"><a href="#Interactive-plot-with-plotly" class="headerlink" title="Interactive plot with {plotly}"></a>Interactive plot with <code>&#123;plotly&#125;</code></h3><p>You can easily make your plots created with <code>&#123;ggplot2&#125;</code> interactive with the <code>&#123;plotly&#125;</code> package:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">library<span class="punctuation">(</span>plotly<span class="punctuation">)</span></span><br><span class="line">ggplotly<span class="punctuation">(</span>p <span class="operator">+</span> aes<span class="punctuation">(</span>color <span class="operator">=</span> year<span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>You can now hover over a point to display more information about that point. There is also the possibility to zoom in and out, to download the plot, to select some observations, etc. More information about <code>&#123;plotly&#125;</code> for R can be found <a href="https://plotly.com/r/">here</a>.</p>
+<h3 id="Combine-plots-with-patchwork"><a href="#Combine-plots-with-patchwork" class="headerlink" title="Combine plots with {patchwork}"></a>Combine plots with <code>&#123;patchwork&#125;</code></h3><p>There are several ways to combine plots made in <code>&#123;ggplot2&#125;</code>. In my opinion, the most convenient way is with the <code>&#123;patchwork&#125;</code> package using symbols such as <code>+</code>, <code>/</code> and parentheses.</p>
+<p>We first need to create some plots and save them:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p_a <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> displ<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">p_b <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_histogram<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">p_c <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> drv<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_boxplot<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>Now that we have 3 plots saved in our environment, we can combine them. To have plots <strong>next to each other</strong> simply use the <code>+</code> symbol:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">library<span class="punctuation">(</span>patchwork<span class="punctuation">)</span></span><br><span class="line">p_a <span class="operator">+</span> p_b <span class="operator">+</span> p_c</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-57-1.png"></p>
+<p>To display them <strong>above each other</strong> simply use the <code>/</code> symbol:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p_a <span class="operator">/</span> p_b <span class="operator">/</span> p_c</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-58-1.png"></p>
+<p>And finally, to combine them <strong>above and next</strong> to each other, mix <code>+</code>, <code>/</code> and parentheses:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p_a <span class="operator">+</span> p_b <span class="operator">/</span> p_c</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-59-1.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="punctuation">(</span>p_a <span class="operator">+</span> p_b<span class="punctuation">)</span> <span class="operator">/</span> p_c</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-59-2.png"></p>
+<p>See more ways to combine plots with:</p>
+<ul>
+<li><code>grid.arrange()</code> from the <code>&#123;gridExtra&#125;</code> package</li>
+<li><code>plot_grid()</code> from the <code>&#123;cowplot&#125;</code> package</li>
+</ul>
+<h3 id="Flip-coordinates"><a href="#Flip-coordinates" class="headerlink" title="Flip coordinates"></a>Flip coordinates</h3><p>Flipping coordinates of your plot is useful to create horizontal boxplots, or when labels of a variable are so long that they overlap each other on the x-axis. See with and without flipping coordinates below:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># without flipping coordinates</span></span><br><span class="line">p1 <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> <span class="built_in">class</span><span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_boxplot<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># with flipping coordinates</span></span><br><span class="line">p2 <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> <span class="built_in">class</span><span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_boxplot<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  coord_flip<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">library<span class="punctuation">(</span>patchwork<span class="punctuation">)</span></span><br><span class="line">p1 <span class="operator">+</span> p2 <span class="comment"># left: without flipping, right: with flipping</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-60-1.png"></p>
+<p>This can be done with many types of plot, not only with boxplots. For instance, if a categorical variable has many levels or the labels are long, it is usually best to flip the coordinates for a better visual:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> <span class="built_in">class</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_bar<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  coord_flip<span class="punctuation">(</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-61-1.png"></p>
+<h3 id="Save-plot"><a href="#Save-plot" class="headerlink" title="Save plot"></a>Save plot</h3><p>The <code>ggsave()</code> function will save the most recent plot in your current <a href="https://statsandr.com/blog/how-to-import-an-excel-file-in-rstudio/#r-working-directory">working directory</a> unless you specify a path to another folder:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> displ<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line">ggsave<span class="punctuation">(</span><span class="string">&quot;plot1.pdf&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p>You can also specify the width, height and resolution (<code>dpi</code>) as follows:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">ggsave<span class="punctuation">(</span><span class="string">&quot;plot1.pdf&quot;</span><span class="punctuation">,</span></span><br><span class="line">  width <span class="operator">=</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">  height <span class="operator">=</span> <span class="number">12</span><span class="punctuation">,</span></span><br><span class="line">  units <span class="operator">=</span> <span class="string">&quot;cm&quot;</span><span class="punctuation">,</span></span><br><span class="line">  dpi <span class="operator">=</span> <span class="number">300</span></span><br><span class="line"><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Managing-dates"><a href="#Managing-dates" class="headerlink" title="Managing dates"></a>Managing dates</h3><p>If the time variable in your dataset is in date format, the <code>&#123;ggplot2&#125;</code> package recognizes the date format and automatically uses a specific type for the axis ticks.</p>
+<p>There is no time variable with a date format in our dataset, so let’s create a new variable of this type thanks to the <code>as.Date()</code> function:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">dat<span class="operator">$</span>date <span class="operator">&lt;-</span> as.Date<span class="punctuation">(</span><span class="string">&quot;2020-08-21&quot;</span><span class="punctuation">)</span> <span class="operator">-</span> <span class="number">0</span><span class="operator">:</span><span class="punctuation">(</span>nrow<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">-</span> <span class="number">1</span><span class="punctuation">)</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>See the first 6 observations of this date variable and its class</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">head<span class="punctuation">(</span>dat<span class="operator">$</span>date<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment">## [1] &quot;2020-08-21&quot; &quot;2020-08-20&quot; &quot;2020-08-19&quot; &quot;2020-08-18&quot; &quot;2020-08-17&quot;</span></span><br><span class="line"><span class="comment">## [6] &quot;2020-08-16&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">str<span class="punctuation">(</span>dat<span class="operator">$</span>date<span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment">##  Date[1:234], format: &quot;2020-08-21&quot; &quot;2020-08-20&quot; &quot;2020-08-19&quot; &quot;2020-08-18&quot; &quot;2020-08-17&quot; ...</span></span><br></pre></td></tr></table></figure>
+
+<p>The new variable <code>date</code> is correctly specified in a date format.</p>
+<p>Most of the time, with a time variable, we want to create a line plot with the date on the X-axis and another continuous variable on the Y-axis, like the following plot for example:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">&lt;-</span> ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> date<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_line<span class="punctuation">(</span><span class="punctuation">)</span></span><br><span class="line">p</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-66-1.png"></p>
+<p>As soon as the time variable is recognized as a date, we can use the <code>scale_x_date()</code> layer to change the format displayed on the X-axis. The following table shows the most frequent date formats:</p>
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/date%20formats%20in%20R.png" alt="Source: www.statmethods.net"></p>
+<p>Source: <a href="http://www.statmethods.net/">www.statmethods.net</a></p>
+<p>Run <code>?strptime()</code> to see many more date formats available in R.</p>
+<p>For this example, let’s add the year in addition to the unabbreviated month:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> scale_x_date<span class="punctuation">(</span>date_labels <span class="operator">=</span> <span class="string">&quot;%B %Y&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-67-1.png"></p>
+<p>It also possible to control the breaks to display on the X-axis with the <code>date_breaks</code> argument. For this example, let’s say we want to display the day as number and the abbreviated month for each interval of 10 days:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> scale_x_date<span class="punctuation">(</span>date_breaks <span class="operator">=</span> <span class="string">&quot;10 days&quot;</span><span class="punctuation">,</span> date_labels <span class="operator">=</span> <span class="string">&quot;%d %b&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-68-1.png"></p>
+<p>If labels displayed on the X-axis are unreadable because they overlap each other, you can rotate them with the <code>theme()</code> layer and the <code>angle</code> argument:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">p <span class="operator">+</span> scale_x_date<span class="punctuation">(</span>date_breaks <span class="operator">=</span> <span class="string">&quot;10 days&quot;</span><span class="punctuation">,</span> date_labels <span class="operator">=</span> <span class="string">&quot;%d %b&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>axis.text.x <span class="operator">=</span> element_text<span class="punctuation">(</span>angle <span class="operator">=</span> <span class="number">60</span><span class="punctuation">,</span> hjust <span class="operator">=</span> <span class="number">1</span><span class="punctuation">)</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-69-1.png"></p>
+<h3 id="Highlight-data-with-gghighlight"><a href="#Highlight-data-with-gghighlight" class="headerlink" title="Highlight data with {gghighlight}"></a>Highlight data with <code>&#123;gghighlight&#125;</code></h3><p>The <code>&#123;gghighlight&#125;</code> package allows, as its name suggests, to highlight some data directly on your ggplot. The highlighted data (that you define) are shown in bright color and the rest in gray.</p>
+<p>Below example of how it works for a scatter plot, boxplot, barplot and histogram.</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line">library<span class="punctuation">(</span>gghighlight<span class="punctuation">)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># scatter plot</span></span><br><span class="line">ggplot<span class="punctuation">(</span>mpg<span class="punctuation">,</span> aes<span class="punctuation">(</span>x <span class="operator">=</span> displ<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">,</span> color <span class="operator">=</span> cyl<span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_point<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  gghighlight<span class="punctuation">(</span>cyl <span class="operator">==</span> <span class="string">&quot;8&quot;</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>legend.position <span class="operator">=</span> <span class="string">&quot;none&quot;</span><span class="punctuation">)</span> <span class="comment"># remove legend</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-70-1.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># boxplot</span></span><br><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> drv<span class="punctuation">,</span> y <span class="operator">=</span> hwy<span class="punctuation">,</span> fill <span class="operator">=</span> drv<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_boxplot<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  gghighlight<span class="punctuation">(</span>drv <span class="operator">%in%</span> <span class="built_in">c</span><span class="punctuation">(</span><span class="string">&quot;r&quot;</span><span class="punctuation">,</span> <span class="string">&quot;4&quot;</span><span class="punctuation">)</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  theme<span class="punctuation">(</span>legend.position <span class="operator">=</span> <span class="string">&quot;none&quot;</span><span class="punctuation">)</span> <span class="comment"># remove legend</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-70-2.png"></p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># barplot</span></span><br><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> drv<span class="punctuation">,</span> fill <span class="operator">=</span> drv<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_bar<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  gghighlight<span class="punctuation">(</span>drv <span class="operator">==</span> <span class="string">&quot;f&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-70-3.png"></p>
+<p>As you can see, the <code>gghighlight()</code> layer accepts different types of conditions, but also several of them at the same time:</p>
+<figure class="highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># histogram</span></span><br><span class="line">ggplot<span class="punctuation">(</span>dat<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  aes<span class="punctuation">(</span>x <span class="operator">=</span> hwy<span class="punctuation">,</span> fill <span class="operator">=</span> year<span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  geom_histogram<span class="punctuation">(</span><span class="punctuation">)</span> <span class="operator">+</span></span><br><span class="line">  gghighlight<span class="punctuation">(</span>displ <span class="operator">&amp;</span>gt; <span class="number">2</span> <span class="operator">&amp;</span>amp; year <span class="operator">==</span> <span class="string">&quot;1999&quot;</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://statsandr.com/blog/2020-08-21-graphics-in-r-with-ggplot2_files/figure-html/unnamed-chunk-71-1.png"></p>
+]]></content>
+      <categories>
+        <category>R Code</category>
+      </categories>
+      <tags>
+        <tag>R</tag>
+        <tag>ggplot2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Go语言初探</title>
+    <url>/posts/64243754.html</url>
+    <content><![CDATA[<p>无意中对Go语言起了兴趣，起源于一款go转写的trojan服务应用。下载goland的尝试了一下。</p>
+<ol>
+<li>Go的安装与环境设置<br><a href="https://go.dev/dl/">Go语言官网</a>有各个平台的安装包，安装简单。</li>
+<li>环境设置GoPath<br>Windows环境，Go语言默认会把安装的包文件安装在C:\User\用户名\Go下面。需要设置环境变化GoPath，设置自己想要安装包的存储位置。同时需要把GoPath目录下的bin目录，加入到系统或者当前用户的Path路径中，否则无法直接运行安装的包。</li>
+<li>一些学习网站<br><a href="https://gobyexample.com/">Go by Example</a> Go by Example is a hands-on introduction to Go using annotated example programs.</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Go Code</category>
+      </categories>
+      <tags>
+        <tag>Go</tag>
+        <tag>Programme</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Plotly 绘图布局</title>
+    <url>/posts/f78b8245.html</url>
+    <content><![CDATA[<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p>读取excel数据并绘制曲线。<br>自从plotly推出了express的方式，他的绘图语法就大幅的变化，想不用但又找不到比它更好的了。<br>express自定义的内容太少了，最终还是要用回原始的方式。</p>
+<h2 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h2><figure class="highlight python"><figcaption><span>Plotly曲线布局代码</span></figcaption><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> pandas <span class="keyword">as</span> pd</span><br><span class="line"><span class="keyword">import</span> plotly.graph_objects <span class="keyword">as</span> go</span><br><span class="line"></span><br><span class="line">coal_rate_data = pd.read_excel(<span class="string">&#x27;data/coal_rate.xlsx&#x27;</span>, header=<span class="literal">None</span>, sheet_name=<span class="string">&#x27;Sheet1&#x27;</span>, skiprows=<span class="number">1</span>, names=[<span class="string">&#x27;Load&#x27;</span>, <span class="string">&#x27;Design_CR&#x27;</span>, <span class="string">&#x27;Test_CR&#x27;</span>])</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">layout = go.Layout(</span><br><span class="line">    title=<span class="built_in">dict</span>(</span><br><span class="line">        text=<span class="string">&#x27;实际煤耗与设计煤耗对比&#x27;</span>,</span><br><span class="line">        x=<span class="number">0.5</span>,</span><br><span class="line">        y=<span class="number">0.9</span>,</span><br><span class="line">        xanchor=<span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">        yanchor=<span class="string">&#x27;top&#x27;</span>,</span><br><span class="line">        font=<span class="built_in">dict</span>(</span><br><span class="line">            size=<span class="number">20</span>,</span><br><span class="line">            color=<span class="string">&#x27;black&#x27;</span></span><br><span class="line">        ),</span><br><span class="line">    ),</span><br><span class="line">    paper_bgcolor=<span class="string">&#x27;rgba(255, 255, 255, 100)&#x27;</span>, <span class="comment"># 设置整个图表的背景色</span></span><br><span class="line">    plot_bgcolor=<span class="string">&#x27;rgba(255, 255, 255, 100)&#x27;</span>, <span class="comment"># 设置绘图区域的背景色</span></span><br><span class="line"></span><br><span class="line">    xaxis=<span class="built_in">dict</span>(</span><br><span class="line">        title=<span class="string">&#x27;负荷率&#x27;</span>,</span><br><span class="line">        titlefont_size=<span class="number">16</span>,</span><br><span class="line">        tickfont_size=<span class="number">14</span>,</span><br><span class="line">        showline=<span class="literal">True</span>,</span><br><span class="line">        showgrid=<span class="literal">False</span>,</span><br><span class="line">        gridcolor=<span class="string">&#x27;rgb(200, 200, 200)&#x27;</span>,</span><br><span class="line">        linecolor=<span class="string">&#x27;rgb(200, 200, 200)&#x27;</span>,</span><br><span class="line">        linewidth=<span class="number">2</span>,</span><br><span class="line">        showticklabels=<span class="literal">True</span>,</span><br><span class="line">        tickangle=<span class="number">0</span>, <span class="comment"># 设置刻度标签的角度</span></span><br><span class="line">        tickmode=<span class="string">&#x27;linear&#x27;</span>, <span class="comment"># 设置刻度模式为线性</span></span><br><span class="line">        dtick=<span class="number">50</span>, <span class="comment"># 设置刻度间隔</span></span><br><span class="line">        tick0 = <span class="number">0</span>, <span class="comment"># 设置刻度起始值</span></span><br><span class="line">        ticks=<span class="string">&#x27;outside&#x27;</span>, <span class="comment"># 设置刻度线方向</span></span><br><span class="line">        minor_ticks=<span class="string">&#x27;inside&#x27;</span>, <span class="comment"># 设置次刻度线方向</span></span><br><span class="line">        minor=<span class="built_in">dict</span>(</span><br><span class="line">            ticklen=<span class="number">4</span>, <span class="comment"># 设置次刻度线长度</span></span><br><span class="line">            tickwidth=<span class="number">1</span>, <span class="comment"># 设置次刻度线宽度</span></span><br><span class="line">            tickcolor=<span class="string">&#x27;rgb(200, 200, 200)&#x27;</span>, <span class="comment"># 设置次刻度线颜色</span></span><br><span class="line">            tickmode=<span class="string">&#x27;auto&#x27;</span>, <span class="comment"># 设置次刻度线模式</span></span><br><span class="line">            <span class="comment"># nticks=4, # 设置次刻度线数量</span></span><br><span class="line">            <span class="comment"># showgrid=True, # 设置是否显示次刻度线网格</span></span><br><span class="line">        ),</span><br><span class="line">    ),</span><br><span class="line">    yaxis=<span class="built_in">dict</span>(</span><br><span class="line">        title=<span class="string">&#x27;煤耗&#x27;</span>,</span><br><span class="line">        titlefont_size=<span class="number">16</span>,</span><br><span class="line">        tickfont_size=<span class="number">14</span>,</span><br><span class="line">        showline=<span class="literal">True</span>,</span><br><span class="line">        showgrid=<span class="literal">False</span>,</span><br><span class="line">        gridcolor=<span class="string">&#x27;rgb(200, 200, 200)&#x27;</span>,</span><br><span class="line">        linecolor=<span class="string">&#x27;rgb(200, 200, 200)&#x27;</span>,</span><br><span class="line">        linewidth=<span class="number">2</span>,</span><br><span class="line">        showticklabels=<span class="literal">True</span>,</span><br><span class="line">        tickangle=<span class="number">0</span>, <span class="comment"># 设置刻度标签的角度</span></span><br><span class="line">        tickmode=<span class="string">&#x27;linear&#x27;</span>, <span class="comment"># 设置刻度模式为线性</span></span><br><span class="line">        dtick=<span class="number">20</span>, <span class="comment"># 设置刻度间隔</span></span><br><span class="line">        <span class="comment"># tick0 = 0, # 设置刻度起始值</span></span><br><span class="line">        ticks=<span class="string">&#x27;outside&#x27;</span>, <span class="comment"># 设置刻度线方向</span></span><br><span class="line">        minor_ticks=<span class="string">&#x27;inside&#x27;</span>, <span class="comment"># 设置次刻度线方向</span></span><br><span class="line">        minor=<span class="built_in">dict</span>(</span><br><span class="line">            ticklen=<span class="number">4</span>, <span class="comment"># 设置次刻度线长度</span></span><br><span class="line">            tickwidth=<span class="number">1</span>, <span class="comment"># 设置次刻度线宽度</span></span><br><span class="line">            tickcolor=<span class="string">&#x27;rgb(200, 200, 200)&#x27;</span>, <span class="comment"># 设置次刻度线颜色</span></span><br><span class="line">            tickmode=<span class="string">&#x27;auto&#x27;</span>, <span class="comment"># 设置次刻度线模式</span></span><br><span class="line">            <span class="comment"># nticks=4, # 设置次刻度线数量</span></span><br><span class="line">            <span class="comment"># showgrid=True, # 设置是否显示次刻度线网格</span></span><br><span class="line">        ),</span><br><span class="line">        <span class="comment"># range=[280, 400],</span></span><br><span class="line">    ),</span><br><span class="line">    legend=<span class="built_in">dict</span>(</span><br><span class="line">        <span class="comment"># title=&#x27;图例&#x27;,</span></span><br><span class="line">        x=<span class="number">0</span>,</span><br><span class="line">        y=<span class="number">0</span>,</span><br><span class="line">        bgcolor=<span class="string">&#x27;rgba(255, 255, 255, 100)&#x27;</span>,</span><br><span class="line">        bordercolor=<span class="string">&#x27;rgba(255, 255, 255, 100)&#x27;</span></span><br><span class="line">    ),</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">fig = go.Figure(layout=layout)</span><br><span class="line">fig.add_trace(</span><br><span class="line">    go.Scatter(x=coal_rate_data[<span class="string">&#x27;Load&#x27;</span>], y=coal_rate_data[<span class="string">&#x27;Design_CR&#x27;</span>], name=<span class="string">&#x27;设计发电煤耗&#x27;</span>, mode=<span class="string">&#x27;lines+markers&#x27;</span>))</span><br><span class="line">fig.add_trace(</span><br><span class="line">    go.Scatter(x=coal_rate_data[<span class="string">&#x27;Load&#x27;</span>], y=coal_rate_data[<span class="string">&#x27;Test_CR&#x27;</span>], name=<span class="string">&#x27;测试发电煤耗&#x27;</span>, mode=<span class="string">&#x27;lines+markers&#x27;</span>))</span><br><span class="line">fig.show(config=&#123;<span class="string">&quot;displayModeBar&quot;</span>: <span class="literal">True</span>, <span class="string">&quot;showTips&quot;</span>: <span class="literal">True</span>&#125;)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Plotly</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker环境下搭建Postgresql服务</title>
+    <url>/posts/21c06faf.html</url>
+    <content><![CDATA[<h2 id="预备工作"><a href="#预备工作" class="headerlink" title="预备工作"></a>预备工作</h2><p>为了Docker下其他容器能够从内部网络访问数据库，因此要建立一个docker network。</p>
+<figure class="highlight bash"><figcaption><span>新建Docker网络</span></figcaption><table><tr><td class="code"><pre><span class="line">docker network create --subnet=10.88.0.0/16 --gateway=10.88.0.1 --opt <span class="string">&quot;com.docker.network.bridge.name&quot;</span>=<span class="string">&quot;bifrost&quot;</span> bifrost</span><br></pre></td></tr></table></figure>
+
+<div class="note info simple"><p>info 注释</p>
+</div>
+
+<pre><code>docker network create：用于创建一个新的网络连接。
+--driver bridge 表示使用桥接模式
+--subnet 10.88.0.0/16 表示子网ip 可以分配 10.88.0.2 到 10.88.0.255
+--gateway 10.88.0.1 表示网关
+bifrost 表示网络名
+</code></pre>
+<h2 id="编写docker-compose-yml"><a href="#编写docker-compose-yml" class="headerlink" title="编写docker-compose.yml"></a>编写docker-compose.yml</h2><p>docker run的方式可以方便的启动运行容器，但是经常需要自定义一些参数，时间长了就会忘记怎么写的，不如通过docker-compose.yml建立容器，即便关闭了也能方便重建。</p>
+<figure class="highlight yaml"><table><tr><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.9&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">pg_container</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:latest</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">admin</span> <span class="comment"># 用户名</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">admin</span> <span class="comment"># 用户密码</span></span><br><span class="line">      <span class="attr">POSTGRES_DB:</span> <span class="string">postgres</span></span><br><span class="line">      <span class="attr">PGDATA:</span> <span class="string">/data/postgresql</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">pgdata:/data/postgresql</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;5432:5432&quot;</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">bifrost</span></span><br><span class="line">  <span class="attr">pgadmin:</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">pgadmin_container</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">dpage/pgadmin4:latest</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">PGADMIN_DEFAULT_EMAIL:</span> <span class="string">admin@admin.com</span></span><br><span class="line">      <span class="attr">PGADMIN_DEFAULT_PASSWORD:</span> <span class="string">admin</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">pgadmin:/home/rundeck/server/data</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;5050:80&quot;</span></span><br><span class="line">    <span class="attr">networks:</span></span><br><span class="line">      <span class="comment">#- default</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">bifrost</span></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">pgdata:</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">local</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">pgdata</span></span><br><span class="line">  <span class="attr">pgadmin:</span></span><br><span class="line">    <span class="attr">driver:</span> <span class="string">local</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">pgadmin</span></span><br><span class="line"><span class="attr">networks:</span></span><br><span class="line">  <span class="attr">bifrost:</span></span><br><span class="line">    <span class="attr">external:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">bifrost</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="启动容器"><a href="#启动容器" class="headerlink" title="启动容器"></a>启动容器</h2><p>启动容器，并保持在后台运行。</p>
+<figure class="highlight bash"><figcaption><span>启动容器</span></figcaption><table><tr><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="停止容器"><a href="#停止容器" class="headerlink" title="停止容器"></a>停止容器</h2><p>简单停止容器</p>
+<figure class="highlight bash"><figcaption><span>停止容器</span></figcaption><table><tr><td class="code"><pre><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
+
+<p>简单停止容器，并清除数据卷的内容。</p>
+<figure class="highlight bash"><figcaption><span>停止容器</span></figcaption><table><tr><td class="code"><pre><span class="line">docker compose down -v</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
+        <tag>Postgresql</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python 计算技巧</title>
+    <url>/posts/f0b350cf.html</url>
+    <content><![CDATA[<h2 id="精确四舍五入"><a href="#精确四舍五入" class="headerlink" title="精确四舍五入"></a>精确四舍五入</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> decimal</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">round_up</span>(<span class="params">x, y</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    四舍五入</span></span><br><span class="line"><span class="string">    :param x: 具体数值 type: str</span></span><br><span class="line"><span class="string">    :param y: 保留小数位数 type: str example: &quot;0.01&quot; 取整 “1.0”</span></span><br><span class="line"><span class="string">    :return: str</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="keyword">return</span> decimal.Decimal(x).quantize(decimal.Decimal(y), rounding=decimal.ROUND_UP)</span><br></pre></td></tr></table></figure>
+
+<h2 id="时间戳转换当地时间"><a href="#时间戳转换当地时间" class="headerlink" title="时间戳转换当地时间"></a>时间戳转换当地时间</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">timestamp_to_localtime</span>(<span class="params">timestamp</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    时间戳转换当地时间</span></span><br><span class="line"><span class="string">    :param timestamp: 时间戳</span></span><br><span class="line"><span class="string">    :return: str</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    time_local = time.localtime(timestamp)</span><br><span class="line">    dt = time.strftime(<span class="string">&quot;%Y-%m-%d %H:%M:%S&quot;</span>, time_local)</span><br><span class="line">    <span class="keyword">return</span> dt</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>JavaScript学习资料备忘</title>
+    <url>/posts/25f40947.html</url>
+    <content><![CDATA[<h1 id="待学习的js库"><a href="#待学习的js库" class="headerlink" title="待学习的js库"></a>待学习的js库</h1><p><a href="https://vueform.com/">vueform</a>：a comprehensive form framework for Vue that makes form development a breeze.<br><img src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/30/vueform.webp" alt="alt text"></p>
+<p><a href="https://vuelidate-next.netlify.app/">vuelidat</a></p>
+<p><a href="https://parsleyjs.org/">parsleyjs</a></p>
+]]></content>
+      <categories>
+        <category>javascript</category>
+        <category>nodejs</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+        <tag>nodejs</tag>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>typer 命令行程序框架</title>
+    <url>/posts/6bfb980.html</url>
+    <content><![CDATA[<p><strong>Typer 是一个深受开发者和使用者喜爱的命令行程序开发库。</strong></p>
+<h3 id="简介说明"><a href="#简介说明" class="headerlink" title="简介说明"></a>简介说明</h3><p>它也是一个命令行工具，它允许用户运行脚本，并自动将它们转换为命令行界面（CLI）应用程序。以下是其主要特点：</p>
+<ol>
+<li>直观易写： <ul>
+<li>提供出色的编辑器支持，使编写代码变得更为便捷。</li>
+<li>全面的自动补全功能，减少了用户在编写代码时的错误。</li>
+<li>设计简单易懂，学习成本低，减少了用户查阅文档的时间。</li>
+</ul>
+</li>
+<li>易于使用： <ul>
+<li>对于最终用户来说，该工具易于操作。</li>
+<li>提供自动帮助文档和适用于所有shell的自动补全功能，增强了用户体验。</li>
+</ul>
+</li>
+<li>简洁高效： <ul>
+<li>最小化代码重复，每个参数声明都带有多种功能，减少了错误出现的可能性。</li>
+</ul>
+</li>
+<li>快速入门： <ul>
+<li>最简单的使用示例只需要在应用中添加两行代码：一行导入语句，一行函数调用。</li>
+</ul>
+</li>
+<li>高度可扩展：<ul>
+<li>可以根据需要增加复杂度，创建任意复杂的命令树和子命令组，支持选项和参数。</li>
+</ul>
+</li>
+<li>运行脚本：<ul>
+<li>内置了一个名为typer的命令&#x2F;程序，允许用户运行脚本，并自动将它们转换为CLI应用程序，即使脚本内部没有使用Typer。</li>
+<li><img src="https://tron.oss-cn-beijing.aliyuncs.com/2024/04/25/etienne-girardet-EP6_VZhzXM8-unsplash.jpeg" alt="img"></li>
+</ul>
+</li>
+</ol>
+<p>Documentation: <a href="https://typer.tiangolo.com/">https://typer.tiangolo.com</a></p>
+<p>Source Code: <a href="https://github.com/tiangolo/typer">https://github.com/tiangolo/typer</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>Typer is FastAPI’s little sibling, it’s the FastAPI of CLIs.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pip install typer</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h3><h4 id="带有两个子命令的示例"><a href="#带有两个子命令的示例" class="headerlink" title="带有两个子命令的示例"></a>带有两个子命令的示例</h4><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> typer</span><br><span class="line"></span><br><span class="line">app = typer.Typer()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.command()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>(<span class="params">name: <span class="built_in">str</span></span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Hello <span class="subst">&#123;name&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.command()</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">goodbye</span>(<span class="params">name: <span class="built_in">str</span>, formal: <span class="built_in">bool</span> = <span class="literal">False</span></span>):</span><br><span class="line">    <span class="keyword">if</span> formal:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Goodbye Ms. <span class="subst">&#123;name&#125;</span>. Have a good day.&quot;</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;Bye <span class="subst">&#123;name&#125;</span>!&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    app()</span><br></pre></td></tr></table></figure>
+<p>And that will:</p>
+<ul>
+<li>Explicitly create a typer.Typer app.</li>
+<li>The previous typer.run actually creates one implicitly for you.</li>
+<li>Add two subcommands with @app.command().</li>
+<li>Execute the app() itself, as if it was a function (instead of typer.run).</li>
+</ul>
+<p><strong>命令行帮助</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python main.py --help</span><br><span class="line"></span><br><span class="line"> Usage: main.py [OPTIONS] COMMAND [ARGS]...</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>子命令hello帮助</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python main.py hello --help</span><br><span class="line"></span><br><span class="line"> Usage: main.py hello [OPTIONS] NAME</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>子命令goodbye帮助</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">python main.py goodbye --help</span><br><span class="line"></span><br><span class="line"> Usage: main.py goodbye [OPTIONS] NAME</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>CLI</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Python命令行动态进度条库：alive-progress</title>
+    <url>/posts/65b4eb9.html</url>
+    <content><![CDATA[<p><a href="https://github.com/rsalmei/alive-progress">alive-progress</a>是一个有着非常绚丽动画的实时进度条库。相比<a href="https://github.com/tqdm/tqdm">tqdm</a>，<a href="https://github.com/prompt-toolkit/python-prompt-toolkit">python-prompt-toolkit</a>的Progress bars等进度条库，有着更佳好看的动画界面，让人欲罢不能。</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> alive_progress <span class="keyword">import</span> alive_bar</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> <span class="number">1000</span>, <span class="number">1500</span>, <span class="number">700</span>, <span class="number">0</span>:</span><br><span class="line">   <span class="keyword">with</span> alive_bar(x) <span class="keyword">as</span> bar:</span><br><span class="line">       <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">1000</span>):</span><br><span class="line">           time.sleep(<span class="number">.005</span>)</span><br><span class="line">           bar()</span><br></pre></td></tr></table></figure>
+
+<p>** 输入结果</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">|████████████████████████████████████████| 1000/1000 [100%] in 5.8s (171.62/s)</span><br><span class="line">|██████████████████████████▋⚠︎            | (!) 1000/1500 [67%] in 5.8s (172.62/s)</span><br><span class="line">|████████████████████████████████████████✗︎ (!) 1000/700 [143%] in 5.8s (172.06/s)</span><br><span class="line">|████████████████████████████████████████| 1000 in 5.8s (172.45/s)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">with</span> alive_bar(total) <span class="keyword">as</span> bar:  <span class="comment"># declare your expected total</span></span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> items:         <span class="comment"># &lt;&lt;-- your original loop</span></span><br><span class="line">        <span class="built_in">print</span>(item)            <span class="comment"># process each item</span></span><br><span class="line">        bar()                  <span class="comment"># call `bar()` at the end</span></span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Python</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+</search>

@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>甘露园技术栈</title>
+  <icon>https://lambda.bz/icon.png</icon>
+  <subtitle>雾失楼台，月迷津渡，桃源望断无寻处</subtitle>
+  <link href="https://lambda.bz/atom.xml" rel="self"/>
+  
+  <link href="https://lambda.bz/"/>
+  <updated>2024-05-06T05:42:11.069Z</updated>
+  <id>https://lambda.bz/</id>
+  
+  <author>
+    <name>乘月又乘风</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>五一，一到假期就过得特别快。</title>
+    <link href="https://lambda.bz/posts/6891fdec.html"/>
+    <id>https://lambda.bz/posts/6891fdec.html</id>
+    <published>2024-05-06T03:07:18.000Z</published>
+    <updated>2024-05-06T05:42:11.069Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;玩一天，歇两天，不知不觉中就上班了。&lt;br&gt;&lt;img src=&quot;https://tron.oss-cn-beijing.aliyuncs.com/2024/05/06/mosi-knife.webp&quot; alt=&quot;Blue</summary>
+        
+      
+    
+    
+    
+    <category term="生活" scheme="https://lambda.bz/categories/Life/"/>
+    
+    
+    <category term="Hoilday" scheme="https://lambda.bz/tags/Hoilday/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>JavaScript学习资料备忘</title>
+    <link href="https://lambda.bz/posts/25f40947.html"/>
+    <id>https://lambda.bz/posts/25f40947.html</id>
+    <published>2024-04-29T15:51:39.000Z</published>
+    <updated>2024-05-06T02:58:46.301Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;待学习的js库&quot;&gt;&lt;a href=&quot;#待学习的js库&quot; class=&quot;headerlink&quot; title=&quot;待学习的js库&quot;&gt;&lt;/a&gt;待学习的js库&lt;/h1&gt;&lt;p&gt;&lt;a href=&quot;https://vueform.com/&quot;&gt;vueform&lt;/a&gt;：a</summary>
+        
+      
+    
+    
+    
+    <category term="javascript" scheme="https://lambda.bz/categories/javascript/"/>
+    
+    <category term="nodejs" scheme="https://lambda.bz/categories/javascript/nodejs/"/>
+    
+    
+    <category term="vue" scheme="https://lambda.bz/tags/vue/"/>
+    
+    <category term="nodejs" scheme="https://lambda.bz/tags/nodejs/"/>
+    
+    <category term="javascript" scheme="https://lambda.bz/tags/javascript/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>在R语言中使用ggplot2绘图</title>
+    <link href="https://lambda.bz/posts/85f45869.html"/>
+    <id>https://lambda.bz/posts/85f45869.html</id>
+    <published>2024-04-27T18:25:57.000Z</published>
+    <updated>2024-05-06T02:58:46.300Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;In order to focus on the construction of the different plots and the use of &lt;code&gt;&amp;#123;ggplot2&amp;#125;&lt;/code&gt;, we will restrict ourselves</summary>
+        
+      
+    
+    
+    
+    <category term="R Code" scheme="https://lambda.bz/categories/R-Code/"/>
+    
+    
+    <category term="R" scheme="https://lambda.bz/tags/R/"/>
+    
+    <category term="ggplot2" scheme="https://lambda.bz/tags/ggplot2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python Requests Retry Failed Requests</title>
+    <link href="https://lambda.bz/posts/9f3a32c3.html"/>
+    <id>https://lambda.bz/posts/9f3a32c3.html</id>
+    <published>2024-04-27T07:25:17.000Z</published>
+    <updated>2024-05-06T02:58:46.300Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Although the Requests library makes it easier to make HTTP requests in Python, getting failed requests is frequent due to a network</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="https://lambda.bz/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="https://lambda.bz/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>typer 命令行程序框架</title>
+    <link href="https://lambda.bz/posts/6bfb980.html"/>
+    <id>https://lambda.bz/posts/6bfb980.html</id>
+    <published>2024-04-26T08:25:57.000Z</published>
+    <updated>2024-05-06T02:58:46.302Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;strong&gt;Typer 是一个深受开发者和使用者喜爱的命令行程序开发库。&lt;/strong&gt;&lt;/p&gt;
+&lt;h3 id=&quot;简介说明&quot;&gt;&lt;a href=&quot;#简介说明&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="https://lambda.bz/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="https://lambda.bz/tags/Python/"/>
+    
+    <category term="CLI" scheme="https://lambda.bz/tags/CLI/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Front-matter 备忘</title>
+    <link href="https://lambda.bz/posts/61370ac5.html"/>
+    <id>https://lambda.bz/posts/61370ac5.html</id>
+    <published>2024-04-25T07:18:43.000Z</published>
+    <updated>2024-05-06T02:58:46.299Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Hexo主题butterfly可用的Front-matter列表。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;What is front matter?&lt;/strong&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Front matter is the</summary>
+        
+      
+    
+    
+    
+    <category term="Hexo" scheme="https://lambda.bz/categories/Hexo/"/>
+    
+    
+    <category term="hexo" scheme="https://lambda.bz/tags/hexo/"/>
+    
+    <category term="butterfly" scheme="https://lambda.bz/tags/butterfly/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python命令行动态进度条库：alive-progress</title>
+    <link href="https://lambda.bz/posts/65b4eb9.html"/>
+    <id>https://lambda.bz/posts/65b4eb9.html</id>
+    <published>2024-04-25T03:43:16.000Z</published>
+    <updated>2024-05-06T02:58:46.301Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;a href=&quot;https://github.com/rsalmei/alive-progress&quot;&gt;alive-progress&lt;/a&gt;是一个有着非常绚丽动画的实时进度条库。相比&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="https://lambda.bz/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="https://lambda.bz/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Go语言初探</title>
+    <link href="https://lambda.bz/posts/64243754.html"/>
+    <id>https://lambda.bz/posts/64243754.html</id>
+    <published>2024-04-19T00:36:31.000Z</published>
+    <updated>2024-05-06T02:58:46.301Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;无意中对Go语言起了兴趣，起源于一款go转写的trojan服务应用。下载goland的尝试了一下。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Go的安装与环境设置&lt;br&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Go Code" scheme="https://lambda.bz/categories/Go-Code/"/>
+    
+    
+    <category term="Go" scheme="https://lambda.bz/tags/Go/"/>
+    
+    <category term="Programme" scheme="https://lambda.bz/tags/Programme/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker环境下搭建Postgresql服务</title>
+    <link href="https://lambda.bz/posts/21c06faf.html"/>
+    <id>https://lambda.bz/posts/21c06faf.html</id>
+    <published>2024-03-14T15:51:54.000Z</published>
+    <updated>2024-05-06T02:58:46.300Z</updated>
+    
+    
+    <summary type="html">description</summary>
+    
+    
+    
+    <category term="Docker" scheme="https://lambda.bz/categories/Docker/"/>
+    
+    
+    <category term="Docker" scheme="https://lambda.bz/tags/Docker/"/>
+    
+    <category term="Postgresql" scheme="https://lambda.bz/tags/Postgresql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Plotly 绘图布局</title>
+    <link href="https://lambda.bz/posts/f78b8245.html"/>
+    <id>https://lambda.bz/posts/f78b8245.html</id>
+    <published>2024-03-06T00:54:39.000Z</published>
+    <updated>2024-05-06T02:58:46.301Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;目标&quot;&gt;&lt;a href=&quot;#目标&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="https://lambda.bz/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="https://lambda.bz/tags/Python/"/>
+    
+    <category term="Plotly" scheme="https://lambda.bz/tags/Plotly/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Python 计算技巧</title>
+    <link href="https://lambda.bz/posts/f0b350cf.html"/>
+    <id>https://lambda.bz/posts/f0b350cf.html</id>
+    <published>2023-03-21T17:35:31.000Z</published>
+    <updated>2024-05-06T02:58:46.301Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;精确四舍五入&quot;&gt;&lt;a href=&quot;#精确四舍五入&quot; class=&quot;headerlink&quot; title=&quot;精确四舍五入&quot;&gt;&lt;/a&gt;精确四舍五入&lt;/h2&gt;&lt;figure class=&quot;highlight python&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    <category term="Python" scheme="https://lambda.bz/categories/Python/"/>
+    
+    
+    <category term="Python" scheme="https://lambda.bz/tags/Python/"/>
+    
+  </entry>
+  
+</feed>
